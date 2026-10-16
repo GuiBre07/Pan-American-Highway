@@ -2,7 +2,9 @@ create database PanAmerican;
 
 use PanAmerican;
 
-grant insert on PanAmerican.* to 'usuario_insert '@'localhost';
+create user 'PanAmerican_insert '@'localhost' identified by 'Pan100Project';
+
+grant insert on PanAmerican.* to 'PanAmerican_insert '@'localhost';
 
 create table cadastro (
 idCadastro int primary key auto_increment,
