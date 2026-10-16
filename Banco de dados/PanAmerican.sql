@@ -2,6 +2,8 @@ create database PanAmerican;
 
 use PanAmerican;
 
+grant insert on PanAmerican.* to 'usuario_insert '@'localhost';
+
 create table cadastro (
 idCadastro int primary key auto_increment,
 nome varchar(255) not null,
@@ -30,3 +32,5 @@ fkCadastro int not null,
 );
 
 desc comentario;
+
+select *from cadastro;
