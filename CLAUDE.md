@@ -1,0 +1,3 @@
+O projeto tem como objetivo a criação de um site de avaliações e comentários locais para lugares que o usuário já viajou, para um trabalho de faculdade. Utilizando a API web-data-viz para guardar os dados inseridos no banco de dados MYSQL, com as linguagens sendo js, html e css para estilização
+
+Preciso que você aja como um professor, não quero que você mexa no código diretamente, mas sim que você me explique o que fazer para chegar ao resultado esperado.
