@@ -97,32 +97,288 @@ body {
 }
 
 /* BANNER */
-
 .banner {
+  position: relative;      /* vira a "moldura" de referência das camadas */
   height: var(--tamanho-banner);
-  color: white;
-  background-image: url('../assets/imgs/bg-jelly-fish-para-home.png');
-  background-size: cover;
+  overflow: hidden;        /* corta o vídeo que passar da moldura */
 }
 
-.banner .container {
-  justify-content: center;
-  align-items: center;
+.banner-video {
+  position: absolute;      /* sai do fluxo e gruda na moldura */
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
+  object-fit: cover;       /* preenche sem esticar (corta as sobras) */
+  z-index: 0;
 }
 
-.banner .container p {
-  width: 50%;
-  margin: 0;
-  padding: 0;
-  font-size: 36px;
+.banner-overlay {
+  position: absolute;
+  inset: 0;                /* atalho para top/right/bottom/left = 0 */
+  background: linear-gradient(180deg, rgba(44, 46, 57, 0.3) 0%, #2C2E39 100%);
+  z-index: 1;
 }
 
-.banner .container span {
+.banner-conteudo {
+  position: relative;      /* precisa de position para o z-index funcionar */
+  z-index: 2;              /* fica por cima de tudo */
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.banner-eyebrow {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #32b9cd;
+  margin-bottom: 16px;
+}
+
+.banner-conteudo h1 {
+  font-size: 72px;
+  line-height: 1.05;
   font-weight: 800;
+  color: #fff;
+  margin: 0 0 20px;
 }
 
-/* MISSÃO VISÃO VALORES */
+.banner-conteudo h1 span {
+  color: #D8125B;
+}
+
+.banner-conteudo p {
+  font-size: 22px;
+  line-height: 1.45;
+  color: #E3E4EA;
+  max-width: 600px;
+  margin: 0 0 36px;
+}
+
+.banner-botoes {
+  display: flex;
+  gap: 16px;
+}
+
+.botao-banner {
+  font-size: 18px;
+  font-weight: 700;
+  padding: 16px 32px;
+  border-radius: 8px;
+  background-color: #D8125B;
+  color: #fff;
+  border: 2px solid #D8125B;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.botao-banner:hover {
+  background-color: #b00e4a;
+  border-color: #b00e4a;
+}
+
+.botao-banner.secundario {
+  background-color: transparent;
+  border-color: #fff;
+}
+
+.botao-banner.secundario:hover {
+  background-color: #fff;
+  color: #2C2E39;
+}
+
+/* TÍTULOS DAS SEÇÕES (usados em "sobre" e "países") */
+
+.titulo-secao {
+  font-size: 44px;
+  line-height: 1.2;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 12px;
+}
+
+.linha-titulo {
+  width: 72px;
+  height: 4px;
+  background-color: #D8125B;
+  border-radius: 2px;
+  margin-bottom: 28px;
+}
+
+/* POR QUE EU CRIEI O SITE */
+
+.sobre {
+  padding: 120px 0;
+}
+
+.sobre .container {
+  gap: 80px;
+  align-items: flex-start;
+}
+
+.sobre-texto {
+  flex: 1;                 /* ocupa o espaço que sobrar */
+}
+
+.sobre-texto p {
+  font-size: 19px;
+  line-height: 1.6;
+  color: #C9CAD3;
+  margin: 0 0 18px;
+}
+
+.sobre-cards {
+  width: 432px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card-objetivo {
+  background-color: #1f2026;
+  border-radius: 12px;
+  border-left: 4px solid #D8125B;
+  padding: 24px 28px;
+}
+
+.card-objetivo h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 6px;
+}
+
+.card-objetivo p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #A9AAB5;
+  margin: 0;
+}
+
+/* PAÍSES VISITADOS */
+
+.paises {
+  padding: 40px 0 120px;
+}
+
+.paises-container {
+  flex-direction: column;
+}
+
+.paises-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 12px;
+}
+
+.paises-topo p {
+  font-size: 19px;
+  color: #C9CAD3;
+  margin: 0 0 28px;
+}
+
+.grade-paises {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);  /* 3 colunas de tamanhos iguais */
+  gap: 32px;
+}
+
+.card-pais {
+  display: flex;
+  flex-direction: column;
+  background-color: #1f2026;
+  border-radius: 14px;
+  overflow: hidden;        /* deixa a foto com os cantos arredondados também */
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+
+.card-pais:hover {
+  transform: translateY(-6px);
+}
+
+.card-pais-foto {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;       /* o mesmo truque do vídeo! (vale quando virar <img>) */
+  background-color: #383a47;
+  border-bottom: 2px dashed #4a4c5a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7d7f8c;
+  font-size: 15px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.card-pais-info {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 24px 24px;
+}
+
+.card-pais-info h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 4px;
+}
+
+.card-pais-info .meta {
+  font-size: 15px;
+  color: #A9AAB5;
+  margin-bottom: 14px;
+}
+
+.card-pais-info .estrelas {
+  font-size: 18px;
+  letter-spacing: 2px;
+  color: #D8125B;
+  margin-bottom: 18px;
+}
+
+.card-pais-info .ver-mais {
+  font-size: 16px;
+  font-weight: 700;
+  color: #D8125B;
+}
+
+.card-adicionar {
+  background-color: transparent;
+  border: 2px dashed #D8125B;
+  align-items: center;
+  justify-content: center;
+  min-height: 380px;
+}
+
+.card-adicionar .mais {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: #D8125B;
+  color: #fff;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.card-adicionar h3 {
+  font-size: 22px;
+  color: #fff;
+  margin: 0 0 6px;
+}
+
+.card-adicionar p {
+  font-size: 15px;
+  color: #A9AAB5;
+  margin: 0;
+}
 
 .social {
   background-color: #e5e5e5;
@@ -157,16 +413,22 @@ body {
 /* FOOTER */
 
 .footer {
-  background-color: #32b9cd;
-  height: 150px;
-  color: #fff;
+  height: var(--tamanho-footer);
+  border-top: 2px solid #32b9cd;
+  color: #A9AAB5;
   display: flex;
   font-size: 15px;
 }
 
 .footer .container {
   justify-content: center;
+  align-items: center;
   text-align: center;
+}
+
+.footer h4 {
+  font-weight: 400;
+  margin: 0;
 }
 
 .footer .container .version {
@@ -410,4 +672,35 @@ input {
   50%  {transform: rotate(25deg)}
   75%  {transform: rotate(-25deg)}
   100% {transform: rotate(25deg)}
+}
+/* TELAS MENORES (notebook pequeno, tablet e celular) */
+
+@media (max-width: 1100px) {
+  .sobre .container {
+    flex-direction: column;   /* texto em cima, cards embaixo */
+  }
+
+  .sobre-cards {
+    width: 100%;
+  }
+
+  .grade-paises {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .banner-conteudo h1 {
+    font-size: 44px;
+  }
+
+  .banner-botoes,
+  .paises-topo {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .grade-paises {
+    grid-template-columns: 1fr;
+  }
 }

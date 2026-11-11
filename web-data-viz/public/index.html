@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AquaTech | Página Inicial</title>
+    <title>Pan-American Highway | Inicio</title>
 
     <script src="./js/sessao.js"></script>
 
@@ -16,21 +16,16 @@
 </head>
 
 <body>
-    <!--header inicio-->
     <header class="header">
     <div class="container">
 
-        <!-- Espaço reservado para a logo (clicar leva ao início) -->
         <a href="index.html" class="logo">
         LOGO
-        <!-- Quando tiver a imagem, troque o texto acima por:
-            <img src="./assets/imgs/logo.png" alt="Logo do site"> -->
         </a>
 
-        <!-- Abas de navegação -->
         <nav>
         <ul class="navbar">
-            <li><a href="index.html">Inicio</a></li>
+            <li class="agora"><a href="index.html">Inicio</a></li>
             <li><a href="sobre.html">Sobre</a></li>
             <li><a href="timeline.html">Timeline</a></li>
             <li><a href="perfil.html">Perfil</a></li>
@@ -39,47 +34,116 @@
 
     </div>
     </header>
-    <!--header fim-->
-  
-    <div class="banner">
-      <div class="container">
-        <p>Preservando <span>hoje</span> para existirem <span>amanhã</span>.</p>
-      </div>
-    </div>
-  
-    <div class="social">
-      <div class="container">
-        <div class="boxes">
-          <div class="box">
-            <img src="assets/imgs/planet-earth_color.png">
-            <h4>Missão</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
-          <div class="box">
-            <img src="assets/imgs/lightbulb_color.png">
-            <h4>Visão</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
-          <div class="box">
-            <img src="assets/imgs/growth_color.png">
-            <h4>Valores</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="footer">
-      <div class="container">
-        <h4>Feito com amor por aluno &hearts; SPTech &copy; 2023-2026</h4>
-      </div>
-    </div>
-  </body>
+    <section class="banner">
 
+        <video class="banner-video" src="./assets/Videos/vancouverCadastro.mp4" autoplay muted loop></video>
+
+        <div class="banner-overlay"></div>
+
+        <div class="container banner-conteudo">
+            <span class="banner-eyebrow">Pan-American Highway</span>
+            <h1>Viaje pelo continente.<br><span>Conte como foi.</span></h1>
+            <p>Avaliações e comentários locais sobre os lugares por onde eu já passei.</p>
+            <div class="banner-botoes">
+                <a href="#paises" class="botao-banner">Ver meus destinos</a>
+                <a href="cadastro.html" class="botao-banner secundario">Cadastre-se</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="sobre">
+        <div class="container">
+
+            <div class="sobre-texto">
+                <h2 class="titulo-secao">Por que eu criei este site?</h2>
+                <div class="linha-titulo"></div>
+                <p>
+                    [Escreva aqui sua motivação.] Toda viagem que fazemos deixa lembranças, seja experiemntar a culinária local, ver uma vista inesquecível, ou até mesmo.
+                </p>
+                <p>
+                    Eu queria um lugar para guardar essas memórias e comentários sobre minhas experiências,
+                    para que outras pessoas possam planejar suas viagens com a visão de quem já esteve lá.
+                </p>
+            </div>
+
+            <div class="sobre-cards">
+                <div class="card-objetivo">
+                    <h3>⚑ Registro de destinos</h3>
+                    <p>País, cidade e tempo de estadia de cada viagem.</p>
+                </div>
+                <div class="card-objetivo">
+                    <h3>★ Avaliação dos lugares</h3>
+                    <p>Uma nota de 0 a 5 para cada destino.</p>
+                </div>
+                <div class="card-objetivo">
+                    <h3>✎ Comentários e memórias</h3>
+                    <p>O que vale a pena (e o que evitar) em cada lugar.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="paises" id="paises">
+        <div class="container paises-container">
+            <div class="paises-topo">
+                <div>
+                    <h2 class="titulo-secao">Países que eu já visitei</h2>
+                    <div class="linha-titulo"></div>
+                </div>
+                <p>Clique em um país para ver as avaliações</p>
+            </div>
+
+            <div class="grade-paises">
+                <a href="#" class="card-pais">
+                    <div class="card-pais-foto">Foto do país</div>
+                    <div class="card-pais-info">
+                        <h3>Argentina</h3>
+                        <span class="meta">Bariloche · tempo de estadia</span>
+                        <span class="estrelas">★★★★☆</span>
+                        <span class="ver-mais">Ver avaliações →</span>
+                    </div>
+                </a>
+
+                <a href="#" class="card-pais">
+                    <div class="card-pais-foto">Foto do país</div>
+                    <div class="card-pais-info">
+                        <h3>Canadá</h3>
+                        <span class="meta">Vancouver · tempo de estadia</span>
+                        <span class="estrelas">★★★★★</span>
+                        <span class="ver-mais">Ver avaliações →</span>
+                    </div>
+                </a>
+
+
+                <a href="#" class="card-pais">
+                    <div class="card-pais-foto">Foto do país</div>
+                    <div class="card-pais-info">
+                        <h3>Nome do país</h3>
+                        <span class="meta">Cidade · tempo de estadia</span>
+                        <span class="estrelas">★★★☆☆</span>
+                        <span class="ver-mais">Ver avaliações →</span>
+                    </div>
+                </a>
+
+                <a href="#" class="card-pais">
+                    <div class="card-pais-foto">Foto do país</div>
+                    <div class="card-pais-info">
+                        <h3>Nome do país</h3>
+                        <span class="meta">Cidade · tempo de estadia</span>
+                        <span class="estrelas">★★★☆☆</span>
+                        <span class="ver-mais">Ver avaliações →</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <h4>Pan-American Highway &copy; 2026 — Trabalho de faculdade</h4>
+        </div>
+    </footer>
+
+</body>
 </html>
