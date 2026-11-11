@@ -8,10 +8,15 @@ grant insert on PanAmerican.* to 'PanAmerican_insert '@'localhost';
 
 create table cadastro (
 idCadastro int primary key auto_increment,
-nome varchar(50) not null,
-cpf char(11) unique,
-email varchar(100),
-	constraint chkEmail check (email like'%@%'),
+nome varchar(60) not null,
+cpf char(14) not null unique,
+email varchar(100) not null unique,
+	constraint chkEmail check (email like'%@%')
+);
+
+create table login (
+idLogin int auto_increment,
+login varchar(45) not null unique,
 senha varchar(45) not null
 -- LEMBRAR verificação de senha no vscode
 );
