@@ -303,7 +303,7 @@ body {
 .card-pais-foto {
   width: 100%;
   height: 210px;
-  object-fit: cover;       /* o mesmo truque do vídeo! (vale quando virar <img>) */
+  object-fit: cover;
   background-color: #383a47;
   border-bottom: 2px dashed #4a4c5a;
   display: flex;
@@ -313,6 +313,13 @@ body {
   font-size: 15px;
   letter-spacing: 1px;
   text-transform: uppercase;
+}
+
+.card-pais-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .card-pais-info {
