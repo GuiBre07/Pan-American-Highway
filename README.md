@@ -35,7 +35,9 @@ O projeto nasceu com **3 objetivos**:
 
 | Documento    | Link                             |
 | ------------ | -------------------------------- |
-| Documentação | [Word](COLE_AQUI_O_LINK_DO_WORD) |
+| Trello | [Trello](https://trello.com/b/uRYfn4g6/pan-american-highway) |
+| Documentação | [Word](https://bandteccom-my.sharepoint.com/:w:/g/personal/guilherme_rosa_sptech_school/cQpBY2K-rOQnT46OtBPuZLA6EgUBCj-44F3xdV43ngcSpJX_Ig) |
+| Prompts | [Word](https://bandteccom-my.sharepoint.com/:w:/g/personal/guilherme_rosa_sptech_school/cQpc6D7UZdObRYrIs9NN9P3REgUBykrBomfbd42vHUprkSjCpw) |
 
 <div align="center">
 
