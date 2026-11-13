@@ -16,18 +16,13 @@
 </head>
 
 <body >
-  <!--header inicio-->
   <header class="header">
     <div class="container">
 
-      <!-- Espaço reservado para a logo (clicar leva ao início) -->
       <a href="index.html" class="logo">
         LOGO
-        <!-- Quando tiver a imagem, troque o texto acima por:
-            <img src="./assets/imgs/logo.png" alt="Logo do site"> -->
       </a>
 
-      <!-- Abas de navegação -->
       <nav>
         <ul class="navbar">
           <li><a href="index.html">Inicio</a></li>
@@ -39,7 +34,6 @@
 
     </div>
   </header>
-  <!--header fim-->
 
   <div class="login">
       <video class="videoCadastro" src=".\assets\Videos\vancouverCadastro.mp4" autoplay muted loop></video>
@@ -52,10 +46,6 @@
       <div class="card card-cadastro">
         <h2>Bem-vindo!</h2>
         <div class="formulario">
-          <!--
-                         Para inserir mais um campo, copie uma das inputs abaixo.
-                         Assim que inserir vá para o script abaixo.
-                     -->
 
           <div class="campo">
             <span>Nome:</span>
@@ -94,21 +84,16 @@
 
 <script>
 
-  // Array para armazenar empresas cadastradas para validação de código de ativação 
   let listaEmpresasCadastradas = [];
 
   function cadastrar() {
-    // aguardar();
 
-    //Recupere o valor da nova input pelo nome do id
-    // Agora vá para o método fetch logo abaixo
     var nomeVar = ipt_nome.value;
     var emailVar = ipt_email.value;
     var cpfVar = ipt_cpf.value;
     var senhaVar = ipt_senha.value;
     var confirmacaoSenhaVar = ipt_confirmacao_senha.value;
 
-    // Verificando se há algum campo em branco
     if (
       nomeVar == "" ||
       emailVar == "" ||
@@ -126,29 +111,14 @@
       setInterval(sumirMensagem, 5000);
     }
 
-    // Verificando se o código de ativação é de alguma empresa cadastrada
 
-    // for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
-    //   if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
-    //     idEmpresaVincular = listaEmpresasCadastradas[i].id
-    //     console.log("Código de ativação válido.");
-    //     break;
-    //   } else {
-    //     cardErro.style.display = "block";
-    //     mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
-    //     finalizarAguardar();
-    //   }
-    // }
 
-    // Enviando o valor da nova input
     fetch("/usuarios/cadastrar", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        // crie um atributo que recebe o valor recuperado aqui
-        // Agora vá para o arquivo routes/usuario.js
         nomeServer: nomeVar,
         emailServer: emailVar,
         senhaServer: senhaVar,
@@ -182,25 +152,7 @@
     return false;
   }
 
-  // Listando empresas cadastradas 
-  // function listar() {
-  //   fetch("/empresas/listar", {
-  //     method: "GET",
-  //   })
-  //     .then(function (resposta) {
-  //       resposta.json().then((empresas) => {
-  //         empresas.forEach((empresa) => {
-  //           listaEmpresasCadastradas.push(empresa);
 
-  //           console.log("listaEmpresasCadastradas")
-  //           console.log(listaEmpresasCadastradas[0].codigo_ativacao)
-  //         });
-  //       });
-  //     })
-  //     .catch(function (resposta) {
-  //       console.log(`#ERRO: ${resposta}`);
-  //     });
-  // }
 
   function sumirMensagem() {
     cardErro.style.display = "none";

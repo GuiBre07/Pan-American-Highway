@@ -1,6 +1,5 @@
 var mysql = require("mysql2");
 
-// CONEXÃO DO BANCO MYSQL SERVER - usuário de INSERT (padrão)
 var mySqlConfig = {
     host: process.env.DB_HOST,
     database: process.env.DB_DATABASE,
@@ -9,7 +8,6 @@ var mySqlConfig = {
     port: process.env.DB_PORT
 };
 
-// CONEXÃO DO BANCO MYSQL SERVER - usuário de SELECT
 var mySqlConfigSelect = {
     host: process.env.DB_HOST,
     database: process.env.DB_DATABASE,
@@ -18,7 +16,6 @@ var mySqlConfigSelect = {
     port: process.env.DB_PORT
 };
 
-// tipo: "select" usa o usuário de SELECT; sem informar, usa o usuário de INSERT
 function executar(instrucao, tipo) {
     var configEscolhida = tipo === "select" ? mySqlConfigSelect : mySqlConfig;
 

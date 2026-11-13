@@ -1,10 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-/* 
-CORES PRINCIPAIS DO SITE:
-FUCSIA (#D8125B) 
-CINZA ESCURO (#2C2E39) 
-*/
 
 body {
   margin: 0;
@@ -27,7 +22,6 @@ body {
   margin: auto;
 }
 
-/* HEADER */
 
 .header {
   height: var(--tamanho-header);
@@ -45,7 +39,6 @@ body {
   color: #D8125B;
 }
 
-/* Placeholder da logo */
 .logo {
   width: 120px;
   height: 50px;
@@ -96,33 +89,32 @@ body {
   font-weight: 800;
 }
 
-/* BANNER */
 .banner {
-  position: relative;      /* vira a "moldura" de referência das camadas */
+  position: relative;
   height: var(--tamanho-banner);
-  overflow: hidden;        /* corta o vídeo que passar da moldura */
+  overflow: hidden;
 }
 
 .banner-video {
-  position: absolute;      /* sai do fluxo e gruda na moldura */
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;       /* preenche sem esticar (corta as sobras) */
+  object-fit: cover;
   z-index: 0;
 }
 
 .banner-overlay {
   position: absolute;
-  inset: 0;                /* atalho para top/right/bottom/left = 0 */
+  inset: 0;
   background: linear-gradient(180deg, rgba(44, 46, 57, 0.3) 0%, #2C2E39 100%);
   z-index: 1;
 }
 
 .banner-conteudo {
-  position: relative;      /* precisa de position para o z-index funcionar */
-  z-index: 2;              /* fica por cima de tudo */
+  position: relative;
+  z-index: 2;
   height: 100%;
   flex-direction: column;
   justify-content: center;
@@ -189,7 +181,6 @@ body {
   color: #2C2E39;
 }
 
-/* TÍTULOS DAS SEÇÕES (usados em "sobre" e "países") */
 
 .titulo-secao {
   font-size: 44px;
@@ -207,7 +198,6 @@ body {
   margin-bottom: 28px;
 }
 
-/* POR QUE EU CRIEI O SITE */
 
 .sobre {
   padding: 120px 0;
@@ -219,7 +209,7 @@ body {
 }
 
 .sobre-texto {
-  flex: 1;                 /* ocupa o espaço que sobrar */
+  flex: 1;
 }
 
 .sobre-texto p {
@@ -257,7 +247,6 @@ body {
   margin: 0;
 }
 
-/* PAÍSES VISITADOS */
 
 .paises {
   padding: 40px 0 120px;
@@ -282,7 +271,7 @@ body {
 
 .grade-paises {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);  /* 3 colunas de tamanhos iguais */
+  grid-template-columns: repeat(3, 1fr);
   gap: 32px;
 }
 
@@ -291,7 +280,7 @@ body {
   flex-direction: column;
   background-color: #1f2026;
   border-radius: 14px;
-  overflow: hidden;        /* deixa a foto com os cantos arredondados também */
+  overflow: hidden;
   text-decoration: none;
   transition: transform 0.2s;
 }
@@ -417,7 +406,6 @@ body {
   align-items: center;
 }
 
-/* FOOTER */
 
 .footer {
   height: var(--tamanho-footer);
@@ -442,7 +430,6 @@ body {
   font-size: 12px;
 }
 
-/* LOGIN */
 .videoCadastro {
 position: absolute;
 top: 0;
@@ -555,7 +542,6 @@ z-index: 0;
   display: none
 }
 
-/* FORMULARIO */
 
 .alerta_erro{
   display: flex;
@@ -622,7 +608,6 @@ input {
   width: 50px;
 }
 
-/* SIMULADOR */
 
 .simulador {
   color: white;
@@ -634,7 +619,6 @@ input {
   height: var(--tamanho-simulador);
 }
 
-/* ALERTA */
 
 #alerta {
   position: absolute;
@@ -680,11 +664,10 @@ input {
   75%  {transform: rotate(-25deg)}
   100% {transform: rotate(25deg)}
 }
-/* TELAS MENORES (notebook pequeno, tablet e celular) */
 
 @media (max-width: 1100px) {
   .sobre .container {
-    flex-direction: column;   /* texto em cima, cards embaixo */
+    flex-direction: column;
   }
 
   .sobre-cards {
