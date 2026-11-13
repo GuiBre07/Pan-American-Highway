@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Pan-American Highway | Timeline</title>
-q
+
     <script src="./js/sessao.js"></script>
 
     <link rel="stylesheet" href="./css/estilo.css">
@@ -16,61 +16,141 @@ q
 </head>
 
 <body>
-
-    <div class="header">
+    <header class="header">
         <div class="container">
-            <h1 class="titulo">AquaTech</h1>
-            <ul class="navbar">
-                <li>
-                    <a href="./index.html">Inicial</a>
-                </li>
-                <li class="agora">Simulador</li>
-                <li>|</li>
-                <li>
-                    <a href="./login.html">Login</a>
-                </li>
-                <li>
-                    <a href="./login.html">Cadastro</a>
-                </li>
-            </ul>
+            <a href="index.html" class="logo">LOGO</a>
+            <nav>
+                <ul class="navbar">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                    <li class="agora"><a href="timeline.html">Timeline</a></li>
+                    <li><a href="perfil.html">Perfil</a></li>
+                </ul>
+            </nav>
         </div>
-    </div>
+    </header>
 
+    <main class="timeline-pagina">
 
-    <div class="simulador">
-        <div class="container">
-            <h2>Simulador</h2>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium tempora architecto sint fugit
-                dolorum? Ipsum laborum magnam similique labore, voluptate amet reprehenderit rem ab blanditiis quisquam
-                laboriosam eaque alias. Reiciendis. Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Accusantium tempora architecto sint fugit dolorum? Ipsum laborum magnam similique labore, voluptate amet
-                reprehenderit rem ab blanditiis quisquam laboriosam eaque alias. Reiciendis.</p>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium tempora architecto sint fugit
-                dolorum? Ipsum laborum magnam similique labore, voluptate amet reprehenderit rem ab blanditiis quisquam
-                laboriosam eaque alias. Reiciendis. Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Accusantium tempora architecto sint fugit dolorum? Ipsum laborum magnam similique labore, voluptate amet
-                reprehenderit rem ab blanditiis quisquam laboriosam eaque alias. Reiciendis.</p>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium tempora architecto sint fugit
-                dolorum? Ipsum laborum magnam similique labore, voluptate amet reprehenderit rem ab blanditiis quisquam
-                laboriosam eaque alias. Reiciendis. Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Accusantium tempora architecto sint fugit dolorum? Ipsum laborum magnam similique labore, voluptate amet
-                reprehenderit rem ab blanditiis quisquam laboriosam eaque alias. Reiciendis.</p>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium tempora architecto sint fugit
-                dolorum? Ipsum laborum magnam similique labore, voluptate amet reprehenderit rem ab blanditiis quisquam
-                laboriosam eaque alias. Reiciendis. Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Accusantium tempora architecto sint fugit dolorum? Ipsum laborum magnam similique labore, voluptate amet
-                reprehenderit rem ab blanditiis quisquam laboriosam eaque alias. Reiciendis.</p>
+        <section class="timeline-hero">
+            <p class="manuscrito">a estrada até aqui…</p>
+            <span class="timeline-titulo">Timeline</span>
+            <p>Cada parada, cada foto e cada memória dos lugares por onde passei — em ordem, do primeiro carimbo no
+                passaporte até a próxima aventura.</p>
 
-        </div>
-    </div>
+            <div class="timeline-resumo">
+                <div><strong>4</strong><span>viagens</span></div>
+                <div><strong>3</strong><span>países</span></div>
+                <div><strong>2</strong><span>anos na estrada</span></div>
+            </div>
+        </section>
 
-    <div class="footer">
-        <div class="container">
-            <h4>Feito com amor por aluno &hearts; SPTech &copy; 2023-2026</h4>
-        </div>
-    </div>
+        <section class="timeline">
 
+            <span class="timeline-ano">2022</span>
 
+            <article class="evento">
+                <div class="evento-foto">
+                    <figure class="polaroid" style="--giro: -3deg;">
+                        <div class="foto-espaco">
+                            <img src="./assets/imgs/cerroCatedral.JPEG" alt="Cerro Catedral com neve">
+                        </div>
+                        <figcaption>primeira neve da vida ❄</figcaption>
+                    </figure>
+                </div>
+                <div class="evento-ponto"><span></span></div>
+                <div class="evento-texto">
+                    <span class="evento-data">JANEIRO • 2022</span>
+                    <h2>Cerro Catedral</h2>
+                    <span class="evento-local">📍 Bariloche, Argentina</span>
+                    <p>A primeira vez que vi neve de verdade. Subi de teleférico, quase congelei as mãos e mesmo assim
+                        não queria descer. Chocolate quente no fim do dia valeu cada tombo.</p>
+                    <div class="evento-nota">
+                        <span class="cheia">★</span><span class="cheia">★</span><span class="cheia">★</span><span class="cheia">★</span><span>★</span>
+                        <small>Minha nota</small>
+                    </div>
+                </div>
+            </article>
+
+            <span class="timeline-ano">2023</span>
+
+            <article class="evento invertido">
+                <div class="evento-foto">
+                    <figure class="polaroid" style="--giro: 2.5deg;">
+                        <div class="foto-espaco">
+                            <img src="./assets/imgs/stanleyPark.JPEG" alt="Stanley Park em Vancouver">
+                        </div>
+                        <figcaption>pedalando no seawall</figcaption>
+                    </figure>
+                </div>
+                <div class="evento-ponto"><span></span></div>
+                <div class="evento-texto">
+                    <span class="evento-data">JULHO • 2023</span>
+                    <h2>Stanley Park</h2>
+                    <span class="evento-local">📍 Vancouver, Canadá</span>
+                    <p>Aluguei uma bike e dei a volta inteira no parque pelo seawall. Montanhas de um lado, oceano do
+                        outro — foi aqui que decidi que queria conhecer as Américas inteiras.</p>
+                    <div class="evento-nota">
+                        <span class="cheia">★</span><span class="cheia">★</span><span class="cheia">★</span><span class="cheia">★</span><span class="cheia">★</span>
+                        <small>Minha nota</small>
+                    </div>
+                </div>
+            </article>
+
+            <article class="evento">
+                <div class="evento-foto">
+                    <figure class="polaroid" style="--giro: -2deg;">
+                        <div class="foto-espaco">
+                            <img src="./assets/imgs/tdGarden.JPEG" alt="TD Garden em Boston">
+                        </div>
+                        <figcaption>noite de jogo 🏀</figcaption>
+                    </figure>
+                </div>
+                <div class="evento-ponto"><span></span></div>
+                <div class="evento-texto">
+                    <span class="evento-data">OUTUBRO • 2023</span>
+                    <h2>TD Garden</h2>
+                    <span class="evento-local">📍 Boston, Estados Unidos</span>
+                    <p>Primeiro jogo da NBA ao vivo. O barulho da torcida, o telão gigante e o cachorro-quente caro
+                        demais. Saí rouco e feliz.</p>
+                    <div class="evento-nota">
+                        <span class="cheia">★</span><span class="cheia">★</span><span class="cheia">★</span><span class="cheia">★</span><span>★</span>
+                        <small>Minha nota</small>
+                    </div>
+                </div>
+            </article>
+
+            <article class="evento invertido">
+                <div class="evento-foto">
+                    <figure class="polaroid" style="--giro: 3deg;">
+                        <div class="foto-espaco">
+                            <img src="./assets/imgs/timesSquare.JPEG" alt="Times Square em Nova York">
+                        </div>
+                        <figcaption>luzes que não apagam</figcaption>
+                    </figure>
+                </div>
+                <div class="evento-ponto"><span></span></div>
+                <div class="evento-texto">
+                    <span class="evento-data">DEZEMBRO • 2023</span>
+                    <h2>Times Square</h2>
+                    <span class="evento-local">📍 Nova York, Estados Unidos</span>
+                    <p>Cheguei à noite e parecia meio-dia de tanta luz. Fiquei parado no meio da praça só olhando para
+                        cima, tentando guardar tudo na memória.</p>
+                    <div class="evento-nota">
+                        <span class="cheia">★</span><span class="cheia">★</span><span class="cheia">★</span><span class="cheia">★</span><span>★</span>
+                        <small>Minha nota</small>
+                    </div>
+                </div>
+            </article>
+
+            <div class="proximo-destino">
+                <span class="proximo-destino-icone" aria-hidden="true">✈</span>
+                <p class="manuscrito">Próximos destinos</p>
+            </div>
+
+        </section>
+    </main>
 </body>
+
 
 </html>
