@@ -21,8 +21,10 @@ email varchar(100) not null unique,
 create table login (
 idLogin int primary key auto_increment,
 login varchar(100) not null unique,
-senha varchar(45) not null
+senha varchar(45) not null,
 -- LEMBRAR verificação de senha no vscode
+fkCadastro int not null unique,
+	constraint fkLogin_Cadastro foreign key (fkCadastro) references cadastro(idCadastro)
 );
 
 create table destino (
