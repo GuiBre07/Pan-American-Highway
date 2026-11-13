@@ -1,6 +1,6 @@
 var mysql = require("mysql2");
 
-// CONEXÃO DO BANCO MYSQL SERVER
+// CONEXÃO DO BANCO MYSQL SERVER - usuário de INSERT (padrão)
 var mySqlConfig = {
     host: process.env.DB_HOST,
     database: process.env.DB_DATABASE,
@@ -9,7 +9,18 @@ var mySqlConfig = {
     port: process.env.DB_PORT
 };
 
-function executar(instrucao) {
+// CONEXÃO DO BANCO MYSQL SERVER - usuário de SELECT
+var mySqlConfigSelect = {
+    host: process.env.DB_HOST,
+    database: process.env.DB_DATABASE,
+    user: process.env.DB_USER_SELECT,
+    password: process.env.DB_PASSWORD_SELECT,
+    port: process.env.DB_PORT
+};
+
+// tipo: "select" usa o usuário de SELECT; sem informar, usa o usuário de INSERT
+function executar(instrucao, tipo) {
+    var configEscolhida = tipo === "select" ? mySqlConfigSelect : mySqlConfig;
 
     if (process.env.AMBIENTE_PROCESSO !== "producao" && process.env.AMBIENTE_PROCESSO !== "desenvolvimento") {
         console.log("\nO AMBIENTE (produção OU desenvolvimento) NÃO FOI DEFINIDO EM .env OU dev.env OU app.js\n");
@@ -17,7 +28,7 @@ function executar(instrucao) {
     }
 
     return new Promise(function (resolve, reject) {
-        var conexao = mysql.createConnection(mySqlConfig);
+        var conexao = mysql.createConnection(configEscolhida);
         conexao.connect();
         conexao.query(instrucao, function (erro, resultados) {
             conexao.end();

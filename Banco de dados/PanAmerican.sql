@@ -2,9 +2,13 @@ create database PanAmerican;
 
 use PanAmerican;
 
-create user 'PanAmerican_insert '@'localhost' identified by 'Pan100Project';
+create user 'PanAmerican_insert'@'localhost' identified by 'Pan100Project';
 
-grant insert on PanAmerican.* to 'PanAmerican_insert '@'localhost';
+grant insert on PanAmerican.* to 'PanAmerican_insert'@'localhost';
+
+create user 'PanAmerican_select'@'localhost' identified by 'Pan200Project';
+
+grant insert, select on PanAmerican.* to 'PanAmerican_select'@'localhost';
 
 create table cadastro (
 idCadastro int primary key auto_increment,
@@ -15,8 +19,8 @@ email varchar(100) not null unique,
 );
 
 create table login (
-idLogin int auto_increment,
-login varchar(45) not null unique,
+idLogin int primary key auto_increment,
+login varchar(100) not null unique,
 senha varchar(45) not null
 -- LEMBRAR verificação de senha no vscode
 );
@@ -41,4 +45,7 @@ fkCadastro int not null,
 
 desc comentario;
 
+select *from login;
 select *from cadastro;
+drop table comentario;
+drop table cadastro;
