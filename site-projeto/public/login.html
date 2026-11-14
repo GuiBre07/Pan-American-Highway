@@ -45,15 +45,17 @@
       </div>
       <div class="container">
         <div class="card card-login">
-          <h2>Olá de volta!</h2>
+          <h2>Entre na sua conta</h2>
           <div class="formulario">
             <div class="campo">
               <label for="ipt_email">✉️</label>
               <input id="ipt_email" type="email" placeholder="Login" />
+              <div id="erroEmail" class="msg-erro"></div>
             </div>
             <div class="campo">
               <label for="ipt_senha">🔒</label>
               <input id="ipt_senha" type="password" placeholder="******" />
+              <div id="erroSenha" class="msg-erro"></div>
             </div>
             <button class="botao-cadastro" onclick="entrar()">Entrar</button>
           </div>
@@ -71,20 +73,32 @@
 
 <script>
   function entrar() {
-    aguardar();
-
-    var emailVar = ipt_email.value;
+    var emailVar = ipt_email.value.trim();
     var senhaVar = ipt_senha.value;
+    var flagError = false;
 
-    if (emailVar == "" || senhaVar == "") {
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML =
-        "(Mensagem de erro para todos os campos em branco)";
-      finalizarAguardar();
-      return false;
+    if (emailVar == "") {
+      erroEmail.innerHTML = `Informe seu email`;
+      flagError = true;
+    } else if (emailVar.includes("@") && emailVar.includes(".")) {
+      erroEmail.innerHTML = ``;
     } else {
-      setInterval(sumirMensagem, 5000);
+      erroEmail.innerHTML = `Email inválido`;
+      flagError = true;
     }
+
+    if (senhaVar == "") {
+      erroSenha.innerHTML = `Informe sua senha`;
+      flagError = true;
+    } else {
+      erroSenha.innerHTML = ``;
+    }
+
+    if (flagError) {
+      return false;
+    }
+
+    aguardar();
 
     console.log("FORM LOGIN: ", emailVar);
     console.log("FORM SENHA: ", senhaVar);

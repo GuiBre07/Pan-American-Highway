@@ -115,7 +115,7 @@
     if (emailVar == '') {
       erroEmail.innerHTML = `Informe seu email`
       flagError = true
-    } else if (emailVar.includes('@') && email.includes('.')) {
+    } else if (emailVar.includes('@') && emailVar.includes('.')) {
       erroEmail = ''
     } else {
       erroEmail.innerHTML = `Email inválido`
