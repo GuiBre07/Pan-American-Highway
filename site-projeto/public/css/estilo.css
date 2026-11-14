@@ -344,31 +344,6 @@ body {
   min-height: 380px;
 }
 
-.card-adicionar .mais {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background-color: #D8125B;
-  color: #fff;
-  font-size: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 16px;
-}
-
-.card-adicionar h3 {
-  font-size: 22px;
-  color: #fff;
-  margin: 0 0 6px;
-}
-
-.card-adicionar p {
-  font-size: 15px;
-  color: #A9AAB5;
-  margin: 0;
-}
-
 .social {
   background-color: #e5e5e5;
   display: flex;
@@ -451,24 +426,49 @@ z-index: 0;
 }
 
 .card {
-  width: 50%;
-  border-radius: 10px;
+  position: relative;
+  width: 45%;
   display: flex ;
   align-items: center;
   justify-content: space-evenly;
-  color: palevioletred;
+  color: #FFFFFF;
   flex-direction: column;
   height: fit-content;
-  padding: 20px 0;
+  padding: 20px 5px;
   background: rgba(0,0,0,0.1);
   border-radius: 25px;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(9px);
   border: 2px solid rgba(0,0,0,0.2);
 }
 
 .card h2 {
   margin: 0;
-  font-size: 30px;
+  margin-bottom: 10px;
+  font-size: 32px;
+}
+
+.botao-cadastro {
+  cursor: pointer;
+  font-family: inherit;
+  border: 0;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 20px;
+  color: #fff;
+  background-color: var(--fucsia);
+  width: 60%;
+  height: 40px;
+  align-self: center;
+  margin-top: 24px;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.botao-cadastro:hover {
+  background-color: #b00e4a;
+}
+
+.botao:active {
+  transform: scale(0.98);
 }
 
 .formulario {
@@ -485,7 +485,9 @@ z-index: 0;
 }
 
 .formulario input {
-  border: 2px solid #32b9cd;
+  background: rgba(0, 0, 0, 0.45);
+  border: 2px solid rgba(0,0,0,0.45);
+  color: white;
   text-align: center;
   border-radius: 10px;
   margin: 0;
@@ -503,9 +505,25 @@ z-index: 0;
 
 .campo {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
   justify-content: start;
-  padding: 5px 0;
+  padding: 14px 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.campo label {
+  color: rgb(255, 255, 255, 0.8);
+  font-size: 18px;
+  width: 20px;
+  text-align: center;
+  cursor: pointer;
+  filter: grayscale(1) brightness(1.8);
+}
+
+.campo:focus-within {
+  border-bottom-color: #D8125B;
 }
 
 .botao {
@@ -569,12 +587,21 @@ z-index: 0;
   flex-direction: column;
 }
 
-input {
-  margin-bottom: 10px;
-  border: 2px solid #32b9cd;
-  padding: 10px;
-  text-align: center;
-  border-radius: 10px;
+.formulario input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  color: whitesmoke;
+  font-family: inherit;
+  font-size: 18px;
+  text-align: left;
+}
+
+.formulario .campo input::placeholder {
+  color: #C9CAD3;
 }
 
 .btn {

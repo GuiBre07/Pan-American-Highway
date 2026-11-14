@@ -44,30 +44,36 @@
     </div>
     <div class="container">
       <div class="card card-cadastro">
-        <h2>Bem-vindo!</h2>
+        <h2>Cadastro</h2>
         <div class="formulario">
 
           <div class="campo">
-            <span>Nome:</span>
-            <input id="ipt_nome" type="text" placeholder="Digite seu nome" value="Guilherme"/>
+            <label for="ipt_nome">👤</label>
+            <input id="ipt_nome" type="text" placeholder="Nome"/>
+            <div id="erroNome" class="msg-erro"></div>
           </div>
+
           <div class="campo">
-            <span>E-mail:</span>
-            <input id="ipt_email" type="text" placeholder="Digite seu email" value="breda@gmail.com"/>
+            <label for="ipt_email">✉️</label>
+            <input id="ipt_email" type="email" placeholder="Email"/>
           </div>
+
           <div class="campo">
-            <span>Cpf:</span>
-            <input id="ipt_cpf" type="text" placeholder="Digite seu cpf" value="12345678901"/>
+            <label for="ipt_cpf">🪪</label>
+            <input id="ipt_cpf" type="text" placeholder="Cpf"/>
           </div>
+
           <div class="campo">
-            <span>Senha:</span>
-            <input id="ipt_senha" type="password" placeholder="Crie  sua senha" value="123Guilherme"/>
+            <label for="ipt_senha">🔒</label>
+            <input id="ipt_senha" type="password" placeholder="Senha"/>
           </div>
+
           <div class="campo">
-            <span>Confirmação da Senha:</span>
-            <input id="ipt_confirmacao_senha" type="password" placeholder="Digite novamente sua senha" value="123Guilherme"/>
+            <label for="ipt_confirmacao_senha">🔒</label>
+            <input id="ipt_confirmacao_senha" type="password" placeholder="Confirme a senha"/>
           </div>
-          <button class="botao" onclick="cadastrar()">Cadastrar</button>
+
+          <button class="botao-cadastro" onclick="cadastrar()">Cadastrar</button>
         </div>
         <div id="div_aguardar" class="loading-div">
           <img src="./assets/circle-loading.gif" id="loading-gif" />
