@@ -38,7 +38,7 @@
   <div class="login">
       <video class="videoCadastro" src=".\assets\Videos\vancouverCadastro.mp4" autoplay muted loop></video>
     <div class="alerta_erro">
-      <div class="card_erro" id=""cardErro">
+      <div class="card_erro" id="cardErro">
         <span id="mensagem_erro"></span>
       </div>
     </div>
@@ -56,21 +56,25 @@
           <div class="campo">
             <label for="ipt_email">✉️</label>
             <input id="ipt_email" type="email" placeholder="Email"/>
+            <div id="erroEmail" class="msg-erro"></div>
           </div>
 
           <div class="campo">
             <label for="ipt_cpf">🪪</label>
             <input id="ipt_cpf" type="text" placeholder="Cpf"/>
+            <div id="erroCpf" class="msg-erro"></div>
           </div>
 
           <div class="campo">
             <label for="ipt_senha">🔒</label>
             <input id="ipt_senha" type="password" placeholder="Senha"/>
+            <div id="erroSenha" class="msg-erro"></div>
           </div>
 
           <div class="campo">
             <label for="ipt_confirmacao_senha">🔒</label>
             <input id="ipt_confirmacao_senha" type="password" placeholder="Confirme a senha"/>
+            <div id="erroValSenha" class="msg-erro"></div>
           </div>
 
           <button class="botao-cadastro" onclick="cadastrar()">Cadastrar</button>
@@ -99,25 +103,92 @@
     var cpfVar = ipt_cpf.value;
     var senhaVar = ipt_senha.value;
     var confirmacaoSenhaVar = ipt_confirmacao_senha.value;
+    var flagError = false
 
-    if (
-      nomeVar == "" ||
-      emailVar == "" ||
-      senhaVar == "" ||
-      confirmacaoSenhaVar == "" ||
-      cpfVar == ""
-    ) {
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML =
-        "(Mensagem de erro para todos os campos em branco)";
-
-      finalizarAguardar();
-      return false;
+    if (nomeVar == '') {
+      erroNome.innerHTML = `Informe seu nome`
+      flagError = true
     } else {
-      setInterval(sumirMensagem, 5000);
+      erroNome.innerHTML = ``
+    }
+
+    if (emailVar == '') {
+      erroEmail.innerHTML = `Informe seu email`
+      flagError = true
+    } else if (emailVar.includes('@') && email.includes('.')) {
+      erroEmail = ''
+    } else {
+      erroEmail.innerHTML = `Email inválido`
+      flagError = true
+    }
+
+    if (cpfVar == '') {
+      erroCpf.innerHTML = `Informe seu cpf`
+      flagError = true
+    } else if (isNaN(cpfVar)) {
+      erroCpf.innerHTML = `Use apenas números`
+      flagError = true
+    } else if (cpfVar.length != 11) {
+      erroCpf.innerHTML = `Deve ter 11 números`
+      flagError = true
+    } else {
+      erroCpf.innerHTML = ``
+    }
+
+    var tamanhoSenha = senhaVar.length;
+    var temMaiuscula = senhaVar !== senhaVar.toLowerCase();''
+    var temMinuscula = senhaVar !== senhaVar.toUpperCase();''
+
+      var contSimbolos = 0;
+      var simbolos = '!@#$%&*()_+-=[]{};:,.<>?/|~';
+
+      for (var contador = 0; contador < senhaVar.length; contador++) {
+        if (simbolos.includes(senhaVar[contador])) {
+          contSimbolos++;
+        }
+      }
+
+      var errosSenha = '';
+
+    if (tamanhoSenha == 0) {
+      errosSenha = 'Informe uma senha';
+    } else {
+      if (tamanhoSenha < 8) {
+        errosSenha += 'Mínimo de 8 caracteres<br>';
+      }
+      if (!temMaiuscula) {
+        errosSenha += 'Use uma letra maiúscula<br>';
+      }
+      if (!temMinuscula) {
+        errosSenha += 'Use uma letra minúscula<br>';
+      }
+      if (contSimbolos == 0) {
+        errosSenha += 'Use um caractere especial<br>';
+      }
+    }
+
+    if (errosSenha != '') {
+      erroSenha.innerHTML = errosSenha;
+      flagError = true;
+    } else {
+      erroSenha.innerHTML = '';
+    }
+
+    if (confirmacaoSenhaVar == '') {
+      erroValSenha.innerHTML = `Confirme sua senha`;
+      flagError = true;
+    } else if (senhaVar != confirmacaoSenhaVar) {
+      erroValSenha.innerHTML = `As senhas não conferem`;
+      flagError = true;
+    } else {
+      erroValSenha.innerHTML = ``;
     }
 
 
+
+      if (flagError) {
+        return false;
+      }
 
     fetch("/usuarios/cadastrar", {
       method: "POST",

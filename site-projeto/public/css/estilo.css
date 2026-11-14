@@ -504,6 +504,7 @@ z-index: 0;
 }
 
 .campo {
+  flex-wrap: wrap;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -524,6 +525,14 @@ z-index: 0;
 
 .campo:focus-within {
   border-bottom-color: #D8125B;
+}
+
+.msg-erro {
+  color: #FF4F8B;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 .botao {
