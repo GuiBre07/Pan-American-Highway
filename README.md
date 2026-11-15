@@ -1,17 +1,17 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f325f,100:123d72&height=120&section=header" alt="" width="100%" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:2C2E39,100:D8125B&height=120&section=header" alt="" width="100%" />
 
 <!-- PLACEHOLDER DA LOGO: troque o src abaixo pelo caminho da sua logo (ex.: .docs/.assets/logo.png) -->
-<img src="https://placehold.co/320x120/png?text=Sua+Logo" alt="Logo Pan-American Highway" width="320" />
+<img src="https://placehold.co/320x120/2C2E39/D8125B/png?text=Pan-American+Highway" alt="Logo Pan-American Highway" width="320" />
 
 ### Viaje pelo continente. _Conte como foi._
 
 **Avaliações e comentários locais sobre os lugares por onde você já viajou.**
 
-<img src="https://img.shields.io/badge/Node.js-API-123d72?style=for-the-badge&logo=nodedotjs&logoColor=f8f4ec" alt="Node.js" />
-<img src="https://img.shields.io/badge/MySQL-Banco%20de%20Dados-123d72?style=for-the-badge&logo=mysql&logoColor=f8f4ec" alt="MySQL" />
-<img src="https://img.shields.io/badge/HTML%20%2B%20CSS%20%2B%20JS-Site-123d72?style=for-the-badge&logo=html5&logoColor=f8f4ec" alt="HTML, CSS e JS" />
+<img src="https://img.shields.io/badge/Node.js-API-D8125B?style=for-the-badge&logo=nodedotjs&logoColor=f8f4ec" alt="Node.js" />
+<img src="https://img.shields.io/badge/MySQL-Banco%20de%20Dados-D8125B?style=for-the-badge&logo=mysql&logoColor=f8f4ec" alt="MySQL" />
+<img src="https://img.shields.io/badge/HTML%20%2B%20CSS%20%2B%20JS-Site-D8125B?style=for-the-badge&logo=html5&logoColor=f8f4ec" alt="HTML, CSS e JS" />
 
 </div>
 
@@ -27,9 +27,17 @@ O projeto nasceu com **3 objetivos**:
 
 |     | Objetivo                  | Descrição                                                          |
 | :-: | ------------------------- | ------------------------------------------------------------------ |
-|  ⚑  | **Registro de destinos**  | Guardar os lugares visitados, com país, cidade e tempo de estadia. |
-|  ★  | **Avaliação dos lugares** | Dar a cada destino uma nota de 0 a 5.                              |
-|  ✎  | **Armazenar comentários** | Guardar memórias importantos dos lugares visitados.                |
+|  ⚑  | **Registro de destinos**  | Guardar os países e cidade visitados. |
+|  ★  | **Avaliação dos lugares** | Dar a cada destino uma nota.                                       |
+|  ✎  | **Armazenar comentários** | Guardar memórias importantes dos lugares visitados.                |
+
+## 🛠️ Tecnologias
+
+| Camada         | Tecnologia                         |
+| -------------- | ---------------------------------- |
+| Front-end      | HTML, CSS e JavaScript             |
+| Back-end (API) | Node.js + Express (web-data-viz)   |
+| Banco de dados | MySQL                              |
 
 ## 🔗 Links
 
@@ -45,6 +53,6 @@ O projeto nasceu com **3 objetivos**:
 
 _Toda estrada tem uma história para contar._
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:123d72,100:0f325f&height=110&section=footer" alt="" width="100%" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:D8125B,100:2C2E39&height=110&section=footer" alt="" width="100%" />
 
 </div>

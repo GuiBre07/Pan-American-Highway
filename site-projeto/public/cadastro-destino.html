@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Pan-American Highway | Cadastro de Destino</title>
+
+    <script src="./js/sessao.js"></script>
+    <script>
+      // verificarLogin();
+    </script>
+
+    <link rel="stylesheet" href="./css/estilo.css" />
+    <link rel="icon" href="./assets/icon/favicon2.ico" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+  </head>
+
+  <body onload="/* validarSessao(); */ listarDestinos()">
+    <header class="header">
+      <div class="container">
+        <a href="index.html" class="logo"> LOGO </a>
+
+        <nav>
+          <ul class="navbar">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="sobre.html">Sobre</a></li>
+            <li><a href="timeline.html">Timeline</a></li>
+            <li class="agora"><a href="cadastro-destino.html">Destinos</a></li>
+            <li><a href="#" onclick="limparSessao()">Sair</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <div class="alerta_erro">
+      <div class="card_erro" id="cardErro">
+        <span id="mensagem_erro"></span>
+      </div>
+    </div>
+
+    <main class="destinos">
+      <div class="container destinos-container">
+        <section class="coluna-form">
+          <div class="card">
+            <h2>Novo destino</h2>
+
+            <div class="formulario">
+              <div class="campo">
+                <label for="ipt_pais">🌎</label>
+                <input id="ipt_pais" type="text" maxlength="45" placeholder="País" />
+                <div id="erroPais" class="msg-erro"></div>
+              </div>
+
+              <div class="campo">
+                <label for="ipt_cidade">🏙️</label>
+                <input id="ipt_cidade" type="text" maxlength="45" placeholder="Cidade" />
+                <div id="erroCidade" class="msg-erro"></div>
+              </div>
+
+              <div class="campo">
+                <label for="ipt_estadia">📅</label>
+                <input id="ipt_estadia" type="number" min="1" placeholder="Tempo de estadia (dias)" />
+                <div id="erroEstadia" class="msg-erro"></div>
+              </div>
+
+              <button class="botao-cadastro" onclick="cadastrarDestino()">Cadastrar destino</button>
+            </div>
+
+            <div id="div_aguardar" class="loading-div">
+              <img src="./assets/circle-loading.gif" id="loading-gif" />
+            </div>
+
+            <div id="div_erros_login"></div>
+          </div>
+        </section>
+        
+        <section class="coluna-lista">
+          <div class="lista-topo">
+            <div>
+              <h2 class="titulo-secao">Destinos cadastrados</h2>
+              <div class="linha-titulo"></div>
+            </div>
+            <span class="contador"><b id="qtd_destinos">0</b> destinos</span>
+          </div>
+
+          <ul id="lista_destinos" class="lista-destinos"></ul>
+          <div id="estado_lista" class="estado-lista">Carregando destinos...</div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
+
+<script>
+  function listarDestinos() {
+    fetch("/destinos/listar")
+      .then(function (resposta) {
+        if (!resposta.ok) {
+          throw "status " + resposta.status;
+        }
+        return resposta.json();
+      })
+      .then(function (destinos) {
+        renderizarDestinos(destinos);
+      })
+      .catch(function (erro) {
+        console.log(`#ERRO: ${erro}`);
+        lista_destinos.innerHTML = "";
+        estado_lista.style.display = "block";
+        estado_lista.textContent = "Não foi possível carregar os destinos.";
+      });
+  }
+
+  function renderizarDestinos(destinos) {
+    lista_destinos.innerHTML = "";
+    qtd_destinos.textContent = destinos.length;
+
+    if (destinos.length == 0) {
+      estado_lista.style.display = "block";
+      estado_lista.textContent = "Nenhum destino cadastrado ainda. Que tal adicionar o primeiro?";
+      return;
+    }
+
+    estado_lista.style.display = "none";
+
+    for (var i = 0; i < destinos.length; i++) {
+      var destino = destinos[i];
+
+      var item = document.createElement("li");
+      item.className = "item-destino";
+
+      var pais = document.createElement("p");
+      pais.className = "pais";
+      pais.textContent = destino.pais;
+
+      var cidade = document.createElement("p");
+      cidade.className = "cidade";
+      cidade.textContent = destino.cidade;
+
+      var estadia = document.createElement("p");
+      estadia.className = "estadia";
+      if (destino.tempoEstadia) {
+        estadia.textContent = "📅 " + destino.tempoEstadia + (destino.tempoEstadia == 1 ? " dia" : " dias");
+      } else {
+        estadia.textContent = "📅 Estadia não informada";
+      }
+
+      item.appendChild(pais);
+      item.appendChild(cidade);
+      item.appendChild(estadia);
+      lista_destinos.appendChild(item);
+    }
+  }
+
+  function cadastrarDestino() {
+    if (!verificarLogin()) {
+      return false;
+    }
+
+    var paisVar = ipt_pais.value.trim();
+    var cidadeVar = ipt_cidade.value.trim();
+    var estadiaVar = ipt_estadia.value.trim();
+    var idUsuarioVar = sessionStorage.ID_USUARIO;
+    var flagError = false;
+
+    if (paisVar == "") {
+      erroPais.innerHTML = `Informe o país`;
+      flagError = true;
+    } else {
+      erroPais.innerHTML = ``;
+    }
+
+    if (cidadeVar == "") {
+      erroCidade.innerHTML = `Informe a cidade`;
+      flagError = true;
+    } else {
+      erroCidade.innerHTML = ``;
+    }
+
+    if (estadiaVar == "") {
+      erroEstadia.innerHTML = `Informe quantos dias ficou`;
+      flagError = true;
+    } else if (!Number.isInteger(Number(estadiaVar)) || Number(estadiaVar) < 1) {
+      erroEstadia.innerHTML = `Use um número inteiro maior que 0`;
+      flagError = true;
+    } else {
+      erroEstadia.innerHTML = ``;
+    }
+
+    if (flagError) {
+      return false;
+    }
+
+    aguardar();
+
+    fetch("/destinos/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        paisServer: paisVar,
+        cidadeServer: cidadeVar,
+        tempoEstadiaServer: Number(estadiaVar),
+        idUsuarioServer: idUsuarioVar,
+      }),
+    })
+      .then(function (resposta) {
+        finalizarAguardar();
+
+        if (resposta.ok) {
+          mostrarMensagem("Destino cadastrado com sucesso!");
+          ipt_pais.value = "";
+          ipt_cidade.value = "";
+          ipt_estadia.value = "";
+          listarDestinos();
+        } else if (resposta.status == 401) {
+          sessionStorage.clear();
+          alert("Sua sessão expirou. Faça login novamente.");
+          window.location.replace("/login.html");
+        } else {
+          resposta.text().then(function (texto) {
+            mostrarMensagem("Erro ao cadastrar destino: " + texto);
+          });
+        }
+      })
+      .catch(function (erro) {
+        console.log(`#ERRO: ${erro}`);
+        finalizarAguardar();
+        mostrarMensagem("Não foi possível conectar ao servidor.");
+      });
+
+    return false;
+  }
+
+  function mostrarMensagem(texto) {
+    cardErro.style.display = "block";
+    mensagem_erro.innerHTML = texto;
+    setTimeout(sumirMensagem, 3000);
+  }
+
+  function sumirMensagem() {
+    cardErro.style.display = "none";
+  }
+</script>

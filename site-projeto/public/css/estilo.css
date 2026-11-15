@@ -1071,3 +1071,185 @@ z-index: 0;
   .timeline-resumo { gap: 28px; }
   .proximo-destino { align-self: center; }
 }
+.saudacao {
+  margin: 0 0 8px;
+  font-size: 17px;
+  color: var(--texto-secundario);
+}
+
+.saudacao b {
+  color: var(--fucsia);
+}
+
+.formulario input[type="number"]::-webkit-inner-spin-button,
+.formulario input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.destinos {
+  position: relative;
+  min-height: var(--tamanho-login);
+  background-color: #2C2E39;
+  overflow: hidden;
+}
+
+.destinos::before,
+.destinos::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.destinos::before {
+  width: 380px;
+  height: 380px;
+  top: 12%;
+  left: 6%;
+  background: rgba(216, 18, 91, 0.35);
+}
+
+.destinos::after {
+  width: 300px;
+  height: 300px;
+  bottom: 8%;
+  left: 24%;
+  background: rgba(50, 185, 205, 0.18);
+}
+
+.destinos-container {
+  position: relative;
+  z-index: 1;
+  gap: 56px;
+  align-items: flex-start;
+  padding: 56px 0;
+  box-sizing: border-box;
+}
+
+.coluna-form {
+  width: 420px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 32px;
+}
+
+.coluna-form .card {
+  width: 100%;
+  padding: 32px 8px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.coluna-form .saudacao {
+  color: #C9CAD3;
+  font-size: 17px;
+  margin: 0 0 12px;
+  text-align: center;
+}
+
+.coluna-form .formulario {
+  width: 85%;
+}
+
+.coluna-form .botao-cadastro {
+  width: 70%;
+}
+
+.coluna-lista {
+  flex: 1;
+  min-width: 0;
+  color: #fff;
+}
+
+.lista-topo {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.lista-topo .titulo-secao {
+  font-size: 36px;
+}
+
+.contador {
+  font-size: 15px;
+  font-weight: 600;
+  color: #A9AAB5;
+  margin-bottom: 18px;
+  white-space: nowrap;
+}
+
+.contador b {
+  color: #D8125B;
+  font-size: 20px;
+}
+
+.lista-destinos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 18px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item-destino {
+  background-color: #1f2026;
+  border-radius: 12px;
+  border-left: 4px solid #D8125B;
+  padding: 18px 22px;
+  transition: transform 0.2s;
+}
+
+.item-destino:hover {
+  transform: translateY(-4px);
+}
+
+.item-destino .pais {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #32b9cd;
+  margin: 0 0 4px;
+}
+
+.item-destino .cidade {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 10px;
+}
+
+.item-destino .estadia {
+  font-size: 15px;
+  color: #A9AAB5;
+  margin: 0;
+}
+
+.estado-lista {
+  border: 2px dashed #4a4c5a;
+  border-radius: 12px;
+  padding: 40px 24px;
+  text-align: center;
+  color: #A9AAB5;
+  font-size: 17px;
+}
+
+@media (max-width: 900px) {
+  .destinos-container {
+    flex-direction: column;
+  }
+
+  .coluna-form {
+    width: 100%;
+    position: static;
+  }
+}

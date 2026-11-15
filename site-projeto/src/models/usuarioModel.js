@@ -19,13 +19,15 @@ function cadastrar(nome, email, senha, cpf) {
         INSERT INTO cadastro (nome, email, cpf) VALUES ('${nome}', '${email}', '${cpf}');
     `;
 
-    var instrucaoSqlLogin = `
-        INSERT INTO login (login, senha) VALUES ('${email}', '${senha}');
-    `;
-
     console.log("Executando a instrução SQL: \n" + instrucaoSqlCadastro);
     return database.executar(instrucaoSqlCadastro)
-        .then(function () {
+        .then(function (resultadoCadastro) {
+            var idCadastro = resultadoCadastro.insertId;
+
+            var instrucaoSqlLogin = `
+                INSERT INTO login (login, senha, fkCadastro) VALUES ('${email}', '${senha}', ${idCadastro});
+            `;
+
             console.log("Executando a instrução SQL: \n" + instrucaoSqlLogin);
             return database.executar(instrucaoSqlLogin);
         });
