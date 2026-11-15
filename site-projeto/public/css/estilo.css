@@ -1110,6 +1110,7 @@ z-index: 0;
   min-height: var(--tamanho-login);
   background-color: #2C2E39;
   overflow: hidden;
+  padding-top: 80px;
 }
 
 .destinos::before,

@@ -1,3 +1,5 @@
+drop database PanAmerican;
+
 create database PanAmerican;
 
 use PanAmerican;
@@ -22,7 +24,6 @@ create table login (
 idLogin int primary key auto_increment,
 login varchar(100) not null unique,
 senha varchar(45) not null,
--- LEMBRAR verificação de senha no vscode
 fkCadastro int not null unique,
 	constraint fkLogin_Cadastro foreign key (fkCadastro) references cadastro(idCadastro)
 );
@@ -31,7 +32,9 @@ create table destino (
 idDestino int primary key auto_increment,
 pais varchar(45) not null,
 cidade varchar(45) not null,
-tempoEstadia int
+tempoEstadia int,
+fkCadastro int not null ,
+	constraint fkDestino_Cadastro foreign key (fkCadastro) references cadastro(idCadastro)
 );
 
 create table comentario (
@@ -49,5 +52,3 @@ desc comentario;
 
 select *from login;
 select *from cadastro;
-drop table comentario;
-drop table cadastro;

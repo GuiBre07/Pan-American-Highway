@@ -9,15 +9,16 @@
 
     <script src="./js/sessao.js"></script>
     <script>
-      // verificarLogin();
+      verificarLogin();
     </script>
 
     <link rel="stylesheet" href="./css/estilo.css" />
-    <link rel="icon" href="./assets/icon/favicon2.ico" />
+    <link rel="icon" href="assets/imgs/logo.png" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
   </head>
 
-  <body onload="/* validarSessao(); */ listarDestinos()">
+  
+  <body onload="validarSessao(); listarDestinos()">
     <header class="header">
       <div class="container">
         <a href="index.html" class="logo"> 
@@ -96,7 +97,7 @@
 
 <script>
   function listarDestinos() {
-    fetch("/destinos/listar")
+    fetch(`/destinos/listar/${sessionStorage.ID_USUARIO}`)
       .then(function (resposta) {
         if (!resposta.ok) {
           throw "status " + resposta.status;

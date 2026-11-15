@@ -22,7 +22,7 @@ function cadastrar(req, res) {
                     return;
                 }
 
-                return destinoModel.cadastrar(pais.trim(), cidade.trim(), tempoEstadia)
+                return destinoModel.cadastrar(pais.trim(), cidade.trim(), tempoEstadia, idUsuario)
                     .then(function (resultadoCadastro) {
                         res.json(resultadoCadastro);
                     });
@@ -36,7 +36,14 @@ function cadastrar(req, res) {
 }
 
 function listar(req, res) {
-    destinoModel.listar()
+    var idUsuario = Number(req.params.idUsuario);
+
+        if (!Number.isInteger(idUsuario) || idUsuario <= 0) {
+        res.status(401).send("Usuário inválido!");
+        return;
+    }
+
+    destinoModel.listar(idUsuario)
         .then(function (resultado) {
             res.status(200).json(resultado);
         })

@@ -8,17 +8,17 @@ function buscarUsuario(idUsuario) {
     return database.executar(instrucaoSql, "select");
 }
 
-function cadastrar(pais, cidade, tempoEstadia) {
+function cadastrar(pais, cidade, tempoEstadia, idUsuario) {
     var instrucaoSql = `
-        INSERT INTO destino (pais, cidade, tempoEstadia) VALUES ('${pais}', '${cidade}', ${tempoEstadia});
+        INSERT INTO destino (pais, cidade, tempoEstadia, fkCadastro) VALUES ('${pais}', '${cidade}', ${tempoEstadia}, '${idUsuario}');
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
-function listar() {
+function listar(idUsuario) {
     var instrucaoSql = `
-        SELECT idDestino, pais, cidade, tempoEstadia FROM destino ORDER BY pais, cidade;
+        SELECT idDestino, pais, cidade, tempoEstadia FROM destino WHERE fkCadastro = ${idUsuario} ORDER BY pais, cidade;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql, "select");
