@@ -3,7 +3,7 @@
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:2C2E39,100:D8125B&height=120&section=header" alt="" width="100%" />
 
 <!-- PLACEHOLDER DA LOGO: troque o src abaixo pelo caminho da sua logo (ex.: .docs/.assets/logo.png) -->
-<img src="https://placehold.co/320x120/2C2E39/D8125B/png?text=Pan-American+Highway" alt="Logo Pan-American Highway" width="320" />
+<img src=".docs\.assets\logoEscrita.png" alt="Logo Pan-American Highway" width="320" />
 
 ### Viaje pelo continente. _Conte como foi._
 
@@ -30,14 +30,6 @@ O projeto nasceu com **3 objetivos**:
 |  ⚑  | **Registro de destinos**  | Guardar os países e cidade visitados. |
 |  ★  | **Avaliação dos lugares** | Dar a cada destino uma nota.                                       |
 |  ✎  | **Armazenar comentários** | Guardar memórias importantes dos lugares visitados.                |
-
-## 🛠️ Tecnologias
-
-| Camada         | Tecnologia                         |
-| -------------- | ---------------------------------- |
-| Front-end      | HTML, CSS e JavaScript             |
-| Back-end (API) | Node.js + Express (web-data-viz)   |
-| Banco de dados | MySQL                              |
 
 ## 🔗 Links
 

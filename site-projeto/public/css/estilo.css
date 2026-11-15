@@ -27,6 +27,7 @@ body {
 }
 
 .header .container {
+  width: 92%;
   justify-content: space-between; 
   align-items: center;            
   height: 100%;
@@ -38,13 +39,11 @@ body {
 }
 
 .logo {
-  width: 120px;
-  height: 50px;
-  border: 2px dashed #32b9cd;
-  border-radius: 8px;
+  width: auto;
+  height: 70px;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: left;
   font-weight: 700;
   letter-spacing: 2px;
 }
