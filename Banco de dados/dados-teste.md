@@ -1,6 +1,6 @@
 # Dados de teste (ambiente local)
 
-Criados pela própria tela do site em 15/11/2026, com a API rodando em http://localhost:3333.
+Recriados via API em 15/11/2026 (o banco tinha sido recriado e estava vazio), com a API rodando em http://localhost:3333.
 
 ## Usuário de teste (tabelas `cadastro` + `login`)
 
@@ -12,21 +12,19 @@ Criados pela própria tela do site em 15/11/2026, com a API rodando em http://lo
 | Senha | Teste@123 |
 | idCadastro | 1 |
 
-## Usuário de teste 2 (criado via API em 15/11/2026)
+## Destinos de teste (tabela `destino`)
 
-| Campo | Valor |
-|-------|-------|
-| Nome  | Usuario Teste 2 |
-| Email / login | teste2@panamerican.com |
-| CPF   | 98765432100 |
-| Senha | Teste@123 |
-| idCadastro | 3 |
+| idDestino | País | Cidade | Tempo de estadia |
+|-----------|------|--------|------------------|
+| 1 | Peru | Cusco | 5 dias |
+| 2 | Chile | Santiago | 4 dias |
 
-## Destino de teste (tabela `destino`)
+## Avaliações de teste (tabela `comentario`, criadas pela tela)
 
-| País | Cidade | Tempo de estadia |
-|------|--------|------------------|
-| Canadá | Vancouver | 10 dias |
-| Chile | Santiago | 5 dias (criado via API) |
+| Destino | Ponto turístico | Nota |
+|---------|-----------------|------|
+| Cusco | Machu Picchu | 4 (editada várias vezes nos testes) |
+| Cusco | Vale Sagrado | 5 |
+| Cusco | Pão d'Açúcar inca | 4 (criada no teste da versão simplificada) |
 
 > Use apenas para testes locais. Não reutilize essa senha em nada real.

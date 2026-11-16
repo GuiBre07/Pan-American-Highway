@@ -6,11 +6,15 @@ use PanAmerican;
 
 create user 'PanAmerican_insert'@'localhost' identified by 'Pan100Project';
 
-grant insert on PanAmerican.* to 'PanAmerican_insert'@'localhost';
+grant insert, update, select on PanAmerican.* to 'PanAmerican_insert'@'localhost';
 
 create user 'PanAmerican_select'@'localhost' identified by 'Pan200Project';
 
 grant insert, select on PanAmerican.* to 'PanAmerican_select'@'localhost';
+
+flush privileges;
+
+show grants for 'PanAmerican_insert'@'localhost';
 
 create table cadastro (
 idCadastro int primary key auto_increment,
@@ -42,6 +46,8 @@ idComentario int primary key auto_increment,
 nota decimal(2,1) not null,
 	constraint chkNota check (nota between 0 and 5),
 comentario varchar(500),
+pontoTuristico varchar(80) null,
+dtAvaliacao datetime default current_timestamp,
 fkDestino int not null,
 	constraint fkComentario_Destino foreign key (fkDestino) references destino(idDestino),
 fkCadastro int not null,

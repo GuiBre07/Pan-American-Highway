@@ -17,12 +17,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" />
   </head>
 
-  
-  <body onload="validarSessao(); listarDestinos()">
+  <body onload="validarSessao(); carregarAvaliacoes().then(listarDestinos)">
     <header class="header">
       <div class="container">
-        <a href="index.html" class="logo"> 
-          <img src="assets/imgs/logo.png" alt="Pan American Highway">   
+        <a href="index.html" class="logo">
+          <img src="assets/imgs/logo.png" alt="Pan American Highway">
         </a>
 
         <nav>
@@ -77,7 +76,7 @@
             <div id="div_erros_login"></div>
           </div>
         </section>
-        
+
         <section class="coluna-lista">
           <div class="lista-topo">
             <div>
@@ -92,17 +91,68 @@
         </section>
       </div>
     </main>
+
+    <div id="modal_destino" class="modal-fundo" onclick="fecharAoClicarFora(event)">
+      <div class="modal-card">
+
+        <div class="modal-topo">
+          <div>
+            <p id="modal_pais" class="modal-pais"></p>
+            <h2 id="modal_cidade" class="modal-cidade"></h2>
+            <div class="modal-meta">
+              <span id="modal_estadia" class="modal-estadia"></span>
+              <span id="modal_media" class="chip-media"></span>
+            </div>
+          </div>
+          <button type="button" class="botao-fechar" onclick="fecharDestino()" title="Fechar">✕</button>
+        </div>
+
+        <div class="modal-divisor"></div>
+
+        <div class="modal-secao">
+          <h3>Minhas avaliações</h3>
+          <p>Avalie cada ponto turístico que você visitou nesta cidade.</p>
+        </div>
+
+        <div id="lista_avaliacoes"></div>
+      </div>
+    </div>
   </body>
 </html>
 
 <script>
+  var listaDestinos = [];   
+  var listaAvaliacoes = []; 
+  var destinoAberto = null; 
+  var idEditando = null;    
+  var notaEscolhida = 0;    
+
+  function carregarAvaliacoes() {
+    return fetch(`/avaliacoes/listar/${sessionStorage.ID_USUARIO}`)
+      .then(function (resposta) {
+        if (resposta.ok) {
+          return resposta.json();
+        } else {
+          throw "status " + resposta.status;
+        }
+      })
+      .then(function (avaliacoes) {
+        listaAvaliacoes = avaliacoes;
+      })
+      .catch(function (erro) {
+        console.log(`#ERRO ao carregar avaliações: ${erro}`);
+        listaAvaliacoes = [];
+      });
+  }
+
   function listarDestinos() {
     fetch(`/destinos/listar/${sessionStorage.ID_USUARIO}`)
       .then(function (resposta) {
-        if (!resposta.ok) {
+        if (resposta.ok) {
+          return resposta.json();
+        } else {
           throw "status " + resposta.status;
         }
-        return resposta.json();
       })
       .then(function (destinos) {
         renderizarDestinos(destinos);
@@ -111,50 +161,314 @@
         console.log(`#ERRO: ${erro}`);
         lista_destinos.innerHTML = "";
         estado_lista.style.display = "block";
-        estado_lista.textContent = "Não foi possível carregar os destinos.";
+        estado_lista.innerHTML = "Não foi possível carregar os destinos.";
       });
   }
 
+  function avaliacoesDoDestino(idDestino) {
+    var resultado = [];
+
+    for (var i = 0; i < listaAvaliacoes.length; i++) {
+      if (listaAvaliacoes[i].fkDestino == idDestino) {
+        resultado.push(listaAvaliacoes[i]);
+      }
+    }
+
+    return resultado;
+  }
+
+  function textoResumo(quantidade) {
+    if (quantidade == 0) {
+      return "Sem avaliações";
+    } else if (quantidade == 1) {
+      return "1 avaliação";
+    } else {
+      return quantidade + " avaliações";
+    }
+  }
+
+  function textoEstadia(destino) {
+    if (!destino.tempoEstadia) {
+      return "📅 Estadia não informada";
+    } else if (destino.tempoEstadia == 1) {
+      return "📅 1 dia";
+    } else {
+      return "📅 " + destino.tempoEstadia + " dias";
+    }
+  }
+
   function renderizarDestinos(destinos) {
-    lista_destinos.innerHTML = "";
-    qtd_destinos.textContent = destinos.length;
+    listaDestinos = destinos;
+    qtd_destinos.innerHTML = destinos.length;
 
     if (destinos.length == 0) {
+      lista_destinos.innerHTML = "";
       estado_lista.style.display = "block";
-      estado_lista.textContent = "Nenhum destino cadastrado ainda. Que tal adicionar o primeiro?";
+      estado_lista.innerHTML = "Nenhum destino cadastrado ainda. Que tal adicionar o primeiro?";
       return;
     }
 
     estado_lista.style.display = "none";
 
+    var html = "";
+
     for (var i = 0; i < destinos.length; i++) {
       var destino = destinos[i];
+      var quantidade = avaliacoesDoDestino(destino.idDestino).length;
 
-      var item = document.createElement("li");
-      item.className = "item-destino";
-
-      var pais = document.createElement("p");
-      pais.className = "pais";
-      pais.textContent = destino.pais;
-
-      var cidade = document.createElement("p");
-      cidade.className = "cidade";
-      cidade.textContent = destino.cidade;
-
-      var estadia = document.createElement("p");
-      estadia.className = "estadia";
-      if (destino.tempoEstadia) {
-        estadia.textContent = "📅 " + destino.tempoEstadia + (destino.tempoEstadia == 1 ? " dia" : " dias");
-      } else {
-        estadia.textContent = "📅 Estadia não informada";
+      var classeResumo = "resumo-destino";
+      if (quantidade == 0) {
+        classeResumo = "resumo-destino sem-avaliacao";
       }
 
-      item.appendChild(pais);
-      item.appendChild(cidade);
-      item.appendChild(estadia);
-      lista_destinos.appendChild(item);
+      html += `
+        <li class="item-destino" onclick="abrirDestino(${i})">
+          <p class="pais">${destino.pais}</p>
+          <p class="cidade">${destino.cidade}</p>
+          <p class="estadia">${textoEstadia(destino)}</p>
+          <span class="${classeResumo}">${textoResumo(quantidade)}</span>
+        </li>
+      `;
+    }
+
+    lista_destinos.innerHTML = html;
+  }
+
+  function abrirDestino(indice) {
+    destinoAberto = listaDestinos[indice];
+    idEditando = null;
+
+    modal_pais.innerHTML = destinoAberto.pais;
+    modal_cidade.innerHTML = destinoAberto.cidade;
+    modal_estadia.innerHTML = textoEstadia(destinoAberto);
+
+    renderizarAvaliacoes();
+
+    modal_destino.classList.add("aberto");
+    document.body.style.overflow = "hidden";
+  }
+
+  function fecharDestino() {
+    destinoAberto = null;
+    idEditando = null;
+    modal_destino.classList.remove("aberto");
+    document.body.style.overflow = "";
+  }
+
+  function fecharAoClicarFora(evento) {
+    if (evento.target == modal_destino) {
+      fecharDestino();
     }
   }
+
+  function renderizarAvaliacoes() {
+    var avaliacoes = avaliacoesDoDestino(destinoAberto.idDestino);
+    var avaliacaoEditada = null;
+    var html = "";
+
+    modal_media.innerHTML = textoResumo(avaliacoes.length);
+
+    for (var i = 0; i < avaliacoes.length; i++) {
+      if (avaliacoes[i].idComentario == idEditando) {
+        html += htmlFormulario(true);
+        avaliacaoEditada = avaliacoes[i];
+      } else {
+        html += htmlAvaliada(avaliacoes[i]);
+      }
+    }
+
+    if (idEditando == null) {
+      html += htmlFormulario(false);
+    }
+
+    lista_avaliacoes.innerHTML = html;
+
+    if (avaliacaoEditada != null) {
+      ipt_ponto.value = avaliacaoEditada.pontoTuristico;
+      txt_comentario.value = avaliacaoEditada.comentario || "";
+      notaEscolhida = Number(avaliacaoEditada.nota);
+    } else {
+      notaEscolhida = 0;
+    }
+
+    pintarEstrelas();
+  }
+
+  function htmlEstrelas(nota) {
+    var html = "";
+
+    for (var i = 1; i <= 5; i++) {
+      if (i <= nota) {
+        html += `<span class="estrela-fixa ativa">★</span>`;
+      } else {
+        html += `<span class="estrela-fixa">★</span>`;
+      }
+    }
+
+    return html;
+  }
+
+  function htmlAvaliada(avaliacao) {
+    var nota = Number(avaliacao.nota);
+    var comentario = avaliacao.comentario || "Sem comentário.";
+
+    return `
+      <div class="linha-avaliacao">
+        <div class="col-info">
+          <p class="rotulo">Ponto turístico</p>
+          <p class="nome-ponto">${avaliacao.pontoTuristico}</p>
+          <p class="data-avaliacao">📅 ${avaliacao.data}</p>
+        </div>
+        <div class="col-avaliacao">
+          <div class="linha-nota">
+            <span class="rotulo-nota">Nota</span>
+            <span class="estrelas-fixas">${htmlEstrelas(nota)}</span>
+          </div>
+          <p class="comentario-salvo">${comentario}</p>
+        </div>
+        <div class="col-acoes">
+          <button type="button" class="botao-editar" onclick="editarAvaliacao(${avaliacao.idComentario})">✎ Editar</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function htmlFormulario(editando) {
+    var classe = "linha-avaliacao";
+    var rotulo = "Novo ponto turístico";
+
+    if (editando) {
+      classe = "linha-avaliacao editando";
+      rotulo = "Ponto turístico";
+    }
+
+    return `
+      <div id="div_formulario" class="${classe}" oninput="ativarFormulario()">
+        <div class="col-info">
+          <p class="rotulo">${rotulo}</p>
+          <input id="ipt_ponto" class="ipt-ponto" type="text" maxlength="80" placeholder="Ex.: Machu Picchu" />
+        </div>
+        <div class="col-avaliacao">
+          <div class="linha-nota">
+            <span class="rotulo-nota">Nota</span>
+            <span>
+              <button type="button" id="estrela_1" class="estrela" onclick="escolherNota(1)">★</button>
+              <button type="button" id="estrela_2" class="estrela" onclick="escolherNota(2)">★</button>
+              <button type="button" id="estrela_3" class="estrela" onclick="escolherNota(3)">★</button>
+              <button type="button" id="estrela_4" class="estrela" onclick="escolherNota(4)">★</button>
+              <button type="button" id="estrela_5" class="estrela" onclick="escolherNota(5)">★</button>
+            </span>
+          </div>
+          <textarea id="txt_comentario" class="txt-comentario" maxlength="500"
+                    placeholder="Conte como foi sua experiência neste lugar..."></textarea>
+        </div>
+        <div class="col-acoes">
+          <button type="button" class="botao-salvar" onclick="salvarAvaliacao()">✓ Salvar</button>
+          <button type="button" class="botao-descartar" onclick="descartarEdicao()">Descartar</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function editarAvaliacao(idComentario) {
+    idEditando = idComentario;
+    renderizarAvaliacoes();
+  }
+
+  function descartarEdicao() {
+    idEditando = null;
+    renderizarAvaliacoes();
+  }
+
+  function escolherNota(nota) {
+    notaEscolhida = nota;
+    ativarFormulario();
+    pintarEstrelas();
+  }
+
+  function pintarEstrelas() {
+    for (var i = 1; i <= 5; i++) {
+      var estrela = document.getElementById("estrela_" + i);
+
+      if (i <= notaEscolhida) {
+        estrela.classList.add("ativa");
+      } else {
+        estrela.classList.remove("ativa");
+      }
+    }
+  }
+
+  function ativarFormulario() {
+    div_formulario.classList.add("editando");
+  }
+
+  function salvarAvaliacao() {
+    if (!verificarLogin()) {
+      return false;
+    }
+
+    var pontoVar = ipt_ponto.value.trim();
+    var comentarioVar = txt_comentario.value.trim();
+    var idUsuarioVar = sessionStorage.ID_USUARIO;
+
+    if (notaEscolhida < 1) {
+      mostrarMensagem("Escolha uma nota de 1 a 5 estrelas.");
+      return false;
+    }
+
+    if (pontoVar == "") {
+      mostrarMensagem("Informe o nome do ponto turístico.");
+      return false;
+    }
+
+    var url = "/avaliacoes/cadastrar";
+    var metodo = "POST";
+
+    if (idEditando != null) {
+      url = "/avaliacoes/editar/" + idEditando;
+      metodo = "PUT";
+    }
+
+    fetch(url, {
+      method: metodo,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        idUsuarioServer: idUsuarioVar,
+        idDestinoServer: destinoAberto.idDestino,
+        notaServer: notaEscolhida,
+        pontoTuristicoServer: pontoVar,
+        comentarioServer: comentarioVar,
+      }),
+    })
+      .then(function (resposta) {
+        if (resposta.ok) {
+          mostrarMensagem("Avaliação de " + pontoVar + " salva!");
+          idEditando = null;
+
+          carregarAvaliacoes().then(function () {
+            renderizarAvaliacoes();
+            listarDestinos();
+          });
+        } else if (resposta.status == 401) {
+          sessionStorage.clear();
+          alert("Sua sessão expirou. Faça login novamente.");
+          window.location.replace("/login.html");
+        } else {
+          resposta.text().then(function (texto) {
+            mostrarMensagem("Erro ao salvar: " + texto);
+          });
+        }
+      })
+      .catch(function (erro) {
+        console.log(`#ERRO: ${erro}`);
+        mostrarMensagem("Não foi possível conectar ao servidor.");
+      });
+
+    return false;
+  }
+
 
   function cadastrarDestino() {
     if (!verificarLogin()) {

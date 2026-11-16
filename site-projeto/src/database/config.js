@@ -16,7 +16,7 @@ var mySqlConfigSelect = {
     port: process.env.DB_PORT
 };
 
-function executar(instrucao, tipo) {
+function executar(instrucao, tipo, valores) {
     var configEscolhida = tipo === "select" ? mySqlConfigSelect : mySqlConfig;
 
     if (process.env.AMBIENTE_PROCESSO !== "producao" && process.env.AMBIENTE_PROCESSO !== "desenvolvimento") {
@@ -27,10 +27,11 @@ function executar(instrucao, tipo) {
     return new Promise(function (resolve, reject) {
         var conexao = mysql.createConnection(configEscolhida);
         conexao.connect();
-        conexao.query(instrucao, function (erro, resultados) {
+        conexao.query(instrucao, valores || [], function (erro, resultados) {
             conexao.end();
             if (erro) {
                 reject(erro);
+                return
             }
             console.log(resultados);
             resolve(resultados);

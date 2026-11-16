@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "site-projeto",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "site-projeto", "start"],
+      "port": 3333
+    }
+  ]
+}
