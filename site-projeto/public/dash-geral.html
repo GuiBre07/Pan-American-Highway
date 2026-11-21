@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pan-American Highway | Painel</title>
+
+    <link rel="stylesheet" href="./css/estilo.css">
+    <link rel="icon" href="./assets/icon/favicon2.ico">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+</head>
+
+<body>
+    <main class="painel">
+
+        <div class="painel-topo">
+            <a href="index.html" aria-label="Voltar para o início">
+                <img src="assets/imgs/logo.png" alt="Pan American Highway">
+            </a>
+            <div>
+                <span class="painel-eyebrow">sua estrada em números…</span>
+                <h1>Painel das minhas viagens</h1>
+            </div>
+        </div>
+
+        <div class="painel-grade">
+
+            <section class="db-card db-kpi a-destinos">
+                <p class="db-rotulo">Destinos visitados</p>
+                <p class="db-valor"><span id="kpiDestinos">0</span> <small>cidades</small></p>
+                <p class="db-desc">Cadastrados no seu perfil</p>
+            </section>
+
+            <section class="db-card db-kpi a-paises">
+                <p class="db-rotulo">Países conhecidos</p>
+                <p class="db-valor"><span id="kpiPaises">0</span> <small>países</small></p>
+                <p class="db-desc" id="kpiPaisesLista"></p>
+            </section>
+
+            <section class="db-card db-kpi a-nota">
+                <p class="db-rotulo">Nota média</p>
+                <p class="db-valor"><span id="kpiNota">0,0</span> <small>★</small></p>
+                <p class="db-desc" id="kpiNotaDesc"></p>
+            </section>
+
+            <section class="db-card a-dias">
+                <p class="db-rotulo">Dias viajando</p>
+                <p class="db-valor"><span id="kpiDias">0</span> <small>dias</small></p>
+                <div class="dias-pais">
+                    <span>País com mais dias</span>
+                    <b><span id="diasPaisNome"></span> <em id="diasPaisQtd"></em> dias</b>
+                </div>
+            </section>
+
+            <section class="db-card a-dist">
+                <p class="db-rotulo">Distribuição das notas</p>
+                <p class="db-valor"><span id="distTotal">0</span> <small>avaliações</small></p>
+                <p class="db-desc">Quantas avaliações de cada estrela</p>
+                <div class="dist-area">
+                    <canvas id="graficoNotas" role="img" aria-label="Distribuição das notas de 1 a 5 estrelas"></canvas>
+                </div>
+            </section>
+
+            <section class="db-card a-grafico">
+                <div class="db-cabecalho">
+                    <h2 class="db-titulo">Avaliações por mês</h2>
+                    <span>Últimos 12 meses</span>
+                </div>
+                <div class="grafico-area">
+                    <canvas id="graficoMeses" role="img" aria-label="Avaliações por mês nos últimos 12 meses"></canvas>
+                </div>
+            </section>
+
+            <section class="db-card a-top">
+                <div class="db-cabecalho">
+                    <h2 class="db-titulo">Top 3 pontos turísticos</h2>
+                    <span>Pela maior nota</span>
+                </div>
+                <div id="listaTop"></div>
+            </section>
+
+            <section class="db-card a-ranking">
+                <div class="db-cabecalho">
+                    <h2 class="db-titulo">Países por nota média</h2>
+                    <span>AVG(nota) agrupado por país</span>
+                </div>
+                <div class="ranking-colunas">
+                    <div class="ranking-col mais">
+                        <p class="ranking-sub">▲ Mais bem avaliados</p>
+                        <div id="listaMais"></div>
+                    </div>
+                    <div class="ranking-col menos">
+                        <p class="ranking-sub">▼ Menos bem avaliados</p>
+                        <div id="listaMenos"></div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script>
+        Chart.defaults.color = '#D7D8E0';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.08)';
+
+        var idUsuario = sessionStorage.ID_USUARIO;
+
+        let graficoMeses = new Chart(document.getElementById('graficoMeses'), {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Avaliações',
+                    data: [],
+                    borderColor: '#D8125B',
+                    backgroundColor: '#D8125B',
+                    borderWidth: 3,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
+            }
+        });
+
+        let graficoNotas = new Chart(document.getElementById('graficoNotas'), {
+            type: 'bar',
+            data: {
+                labels: ['5★', '4★', '3★', '2★', '1★'],
+                datasets: [{
+                    label: 'Avaliações',
+                    data: [],
+                    backgroundColor: '#D8125B',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
+            }
+        });
+
+        function obterKpis() {
+            fetch(`/dashboard/kpis/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (resposta) {
+                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                        exibirKpis(resposta);
+                    });
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                }
+            })
+                .catch(function (error) {
+                    console.error(`Erro na obtenção dos KPIs: ${error.message}`);
+                });
+        }
+
+        function obterListaPaises() {
+            fetch(`/dashboard/lista-paises/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
+                if (response.status == 200) {
+                    response.json().then(function (resposta) {
+                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                        exibirListaPaises(resposta);
+                    });
+                } else if (response.status == 204) {
+                    exibirListaPaises([]);
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                }
+            })
+                .catch(function (error) {
+                    console.error(`Erro na obtenção da lista de países: ${error.message}`);
+                });
+        }
+
+        function obterPaisMaisDias() {
+            fetch(`/dashboard/pais-mais-dias/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
+                if (response.status == 200) {
+                    response.json().then(function (resposta) {
+                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                        exibirPaisMaisDias(resposta);
+                    });
+                } else if (response.status == 204) {
+                    exibirPaisMaisDias(null);
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                }
+            })
+                .catch(function (error) {
+                    console.error(`Erro na obtenção do país com mais dias: ${error.message}`);
+                });
+        }
+
+        function obterDadosGraficoMeses() {
+            fetch(`/dashboard/avaliacoes-mes/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
+                if (response.status == 200) {
+                    response.json().then(function (resposta) {
+                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                        plotarGraficoMeses(resposta);
+                    });
+                } else if (response.status == 204) {
+                    plotarGraficoMeses([]);
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                }
+            })
+                .catch(function (error) {
+                    console.error(`Erro na obtenção dos dados p/ gráfico de meses: ${error.message}`);
+                });
+        }
+
+        function obterDadosGraficoNotas() {
+            fetch(`/dashboard/distribuicao-notas/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
+                if (response.status == 200) {
+                    response.json().then(function (resposta) {
+                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                        plotarGraficoNotas(resposta);
+                    });
+                } else if (response.status == 204) {
+                    plotarGraficoNotas([]);
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                }
+            })
+                .catch(function (error) {
+                    console.error(`Erro na obtenção dos dados p/ gráfico de notas: ${error.message}`);
+                });
+        }
+
+        function obterTopPontos() {
+            fetch(`/dashboard/top-pontos/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
+                if (response.status == 200) {
+                    response.json().then(function (resposta) {
+                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                        exibirTopPontos(resposta);
+                    });
+                } else if (response.status == 204) {
+                    exibirTopPontos([]);
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                }
+            })
+                .catch(function (error) {
+                    console.error(`Erro na obtenção dos pontos turísticos: ${error.message}`);
+                });
+        }
+
+        function obterNotaPorPais() {
+            fetch(`/dashboard/nota-pais/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
+                if (response.status == 200) {
+                    response.json().then(function (resposta) {
+                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                        obterCidadesAvaliadas(resposta);
+                    });
+                } else if (response.status == 204) {
+                    exibirRankingPaises([], []);
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                }
+            })
+                .catch(function (error) {
+                    console.error(`Erro na obtenção da nota por país: ${error.message}`);
+                });
+        }
+
+        function obterCidadesAvaliadas(ranking) {
+            fetch(`/dashboard/cidades-avaliadas/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
+                if (response.status == 200) {
+                    response.json().then(function (resposta) {
+                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                        exibirRankingPaises(ranking, resposta);
+                    });
+                } else if (response.status == 204) {
+                    exibirRankingPaises(ranking, []);
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                }
+            })
+                .catch(function (error) {
+                    console.error(`Erro na obtenção das cidades avaliadas: ${error.message}`);
+                });
+        }
+
+        function exibirKpis(resposta) {
+            document.getElementById('kpiDestinos').innerHTML = resposta.destinos;
+            document.getElementById('kpiPaises').innerHTML = resposta.paises;
+            document.getElementById('kpiDias').innerHTML = Number(resposta.dias);
+
+            if (resposta.notaMedia == null) {
+                document.getElementById('kpiNota').innerHTML = '–';
+                document.getElementById('kpiNotaDesc').innerHTML = 'Nenhuma avaliação ainda';
+            } else {
+                document.getElementById('kpiNota').innerHTML = decimal(Number(resposta.notaMedia));
+                document.getElementById('kpiNotaDesc').innerHTML = 'Média de ' + plural(resposta.avaliacoes, 'avaliação', 'avaliações');
+            }
+        }
+
+        function exibirListaPaises(resposta) {
+            var paises = [];
+            for (var i = 0; i < resposta.length; i++) {
+                paises.push(resposta[i].pais);
+            }
+
+            document.getElementById('kpiPaisesLista').textContent = listaTexto(paises);
+        }
+
+        function exibirPaisMaisDias(resposta) {
+            if (resposta == null) {
+                document.getElementById('diasPaisNome').innerHTML = '–';
+                document.getElementById('diasPaisQtd').innerHTML = 0;
+            } else {
+                document.getElementById('diasPaisNome').textContent = resposta.pais;
+                document.getElementById('diasPaisQtd').innerHTML = Number(resposta.dias);
+            }
+        }
+
+        function plotarGraficoMeses(resposta) {
+            var nomesMeses = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+            var labels = [];
+            var valores = [];
+            var hoje = new Date();
+
+            for (var i = 11; i >= 0; i--) {
+                var data = new Date(hoje.getFullYear(), hoje.getMonth() - i, 1);
+                var mes = data.getFullYear() + '-' + String(data.getMonth() + 1).padStart(2, '0');
+                var quantidade = 0;
+
+                for (var j = 0; j < resposta.length; j++) {
+                    if (resposta[j].mes == mes) {
+                        quantidade = resposta[j].quantidade;
+                    }
+                }
+
+                labels.push(nomesMeses[data.getMonth()]);
+                valores.push(quantidade);
+            }
+
+            graficoMeses.data.labels = labels;
+            graficoMeses.data.datasets[0].data = valores;
+            graficoMeses.update();
+        }
+
+        function plotarGraficoNotas(resposta) {
+            var quantidades = [0, 0, 0, 0, 0];
+            var total = 0;
+
+            for (var i = 0; i < resposta.length; i++) {
+                var nota = Number(resposta[i].estrelas);
+                quantidades[5 - nota] += resposta[i].quantidade;
+                total += resposta[i].quantidade;
+            }
+
+            document.getElementById('distTotal').innerHTML = total;
+
+            graficoNotas.data.datasets[0].data = quantidades;
+            graficoNotas.update();
+        }
+
+        function exibirTopPontos(resposta) {
+            if (resposta.length == 0) {
+                document.getElementById('listaTop').innerHTML = '<p class="vazio">Nenhum ponto turístico avaliado ainda.</p>';
+                return;
+            }
+
+            var html = '';
+            for (var i = 0; i < resposta.length; i++) {
+                var ponto = resposta[i];
+                html += `
+                    <div class="item">
+                        <span class="posicao">#${i + 1}</span>
+                        <div><h3>${seguro(ponto.pontoTuristico)}</h3><p>${seguro(ponto.cidade + ', ' + ponto.pais)}</p></div>
+                        ${estrelas(Number(ponto.nota))}
+                    </div>`;
+            }
+            document.getElementById('listaTop').innerHTML = html;
+        }
+
+        function linhaPais(pais, posicao, listaCidades) {
+            var cidades = [];
+            for (var i = 0; i < listaCidades.length; i++) {
+                if (listaCidades[i].pais == pais.pais) {
+                    cidades.push(listaCidades[i].cidade);
+                }
+            }
+
+            return `
+                <div class="item">
+                    <span class="posicao">#${posicao}</span>
+                    <div><h3>${seguro(pais.pais)}</h3><p>${plural(cidades.length, 'destino', 'destinos')} · ${seguro(cidades.join(', '))}</p></div>
+                    <span class="nota-num">${decimal(Number(pais.media))}</span>
+                    ${estrelas(Number(pais.media))}
+                </div>`;
+        }
+
+        function exibirRankingPaises(resposta, listaCidades) {
+            var htmlMais = '';
+            var htmlMenos = '';
+
+            for (var i = 0; i < resposta.length && i < 3; i++) {
+                htmlMais += linhaPais(resposta[i], i + 1, listaCidades);
+            }
+
+            var posicao = 1;
+            for (var i = resposta.length - 1; i >= 3; i--) {
+                htmlMenos += linhaPais(resposta[i], posicao, listaCidades);
+                posicao++;
+            }
+
+            if (htmlMais == '') {
+                htmlMais = '<p class="vazio">Nenhum país avaliado ainda.</p>';
+            }
+            if (htmlMenos == '') {
+                htmlMenos = '<p class="vazio">Avalie mais países para comparar.</p>';
+            }
+
+            document.getElementById('listaMais').innerHTML = htmlMais;
+            document.getElementById('listaMenos').innerHTML = htmlMenos;
+        }
+
+        function seguro(valor) {
+            var div = document.createElement('div');
+            div.textContent = valor;
+            return div.innerHTML;
+        }
+
+        function decimal(numero) {
+            return numero.toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+        }
+
+        function plural(quantidade, singular, varios) {
+            return quantidade + ' ' + (quantidade == 1 ? singular : varios);
+        }
+
+        function listaTexto(itens) {
+            if (itens.length < 2) {
+                return itens.join('');
+            }
+            return itens.slice(0, -1).join(', ') + ' e ' + itens[itens.length - 1];
+        }
+
+        function estrelas(nota) {
+            var arredondada = Math.round(nota);
+            var html = '';
+            for (var i = 1; i <= 5; i++) {
+                html += `<span class="${i <= arredondada ? 'on' : ''}">★</span>`;
+            }
+            return `<span class="estrelas" role="img" aria-label="${arredondada} de 5 estrelas">${html}</span>`;
+        }
+
+        if (idUsuario == undefined) {
+            window.location = './login.html';
+        } else {
+            obterKpis();
+            obterListaPaises();
+            obterPaisMaisDias();
+            obterDadosGraficoMeses();
+            obterDadosGraficoNotas();
+            obterTopPontos();
+            obterNotaPorPais();
+        }
+    </script>
+</body>
+
+</html>

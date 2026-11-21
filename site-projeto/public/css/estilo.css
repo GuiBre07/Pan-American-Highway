@@ -1594,3 +1594,400 @@ z-index: 0;
 .card_erro {
   z-index: 100;
 }
+
+/* =====================================================================
+   DASHBOARDS (dash-geral.html e dashboard-pais.html)
+   Tudo fica dentro de .painel para não afetar as outras páginas,
+   que também usam classes como .item, .estrelas e .mais.
+   ===================================================================== */
+
+.painel {
+  --rosa: #D8125B;
+  --rosa-claro: #E8668F;
+  --card: #393B49;
+  --texto: #fff;
+  --texto-suave: #D7D8E0;
+  --texto-mudo: #A9AAB5;
+  --estrela-vazia: #55576a;
+  --linha: rgba(255, 255, 255, 0.08);
+
+  box-sizing: border-box;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 32px 40px 40px;
+  color: var(--texto);
+}
+
+.painel .painel-topo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.painel .painel-topo a {
+  display: flex;
+}
+
+.painel .painel-topo img {
+  height: 56px;
+  width: auto;
+}
+
+.painel .painel-eyebrow {
+  display: block;
+  font-family: 'Caveat', cursive;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--rosa);
+}
+
+.painel .painel-topo h1 {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+/* Filtro de país (só na dashboard-pais.html) */
+.painel .filtro {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: auto;
+}
+
+.painel .filtro label {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+}
+
+.painel .filtro select {
+  min-width: 220px;
+  padding: 12px 44px 12px 18px;
+  border: 2px solid var(--rosa);
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--texto);
+  background: var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%23D8125B' stroke-width='2.5'/%3E%3C/svg%3E") no-repeat right 18px center;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.painel .filtro select:focus-visible {
+  outline: 3px solid var(--rosa-claro);
+  outline-offset: 2px;
+}
+
+.painel .filtro option {
+  background: #2C2E39;
+}
+
+.painel .link-geral {
+  font-size: 15px;
+  color: var(--texto-suave);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.painel .link-geral:hover {
+  color: var(--rosa-claro);
+}
+
+.painel .vazio {
+  margin: 18px 0 0;
+  font-size: 15px;
+  color: var(--texto-mudo);
+}
+
+/* Grade e cards */
+.painel .painel-grade {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  grid-template-areas:
+    "destinos paises nota"
+    "dias grafico grafico"
+    "dist grafico grafico"
+    "top ranking ranking";
+}
+
+.painel .db-card {
+  box-sizing: border-box;
+  padding: 26px;
+  border-radius: 20px;
+  background: var(--card);
+}
+
+.painel .a-destinos { grid-area: destinos; }
+.painel .a-paises   { grid-area: paises; }
+.painel .a-nota     { grid-area: nota; }
+.painel .a-dias     { grid-area: dias; }
+.painel .a-dist     { grid-area: dist; }
+.painel .a-grafico  { grid-area: grafico; }
+.painel .a-top      { grid-area: top; }
+.painel .a-ranking  { grid-area: ranking; }
+
+.painel .db-rotulo {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+}
+
+.painel .db-valor {
+  margin: 0;
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.painel .db-valor small {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.painel .db-desc {
+  margin: 6px 0 0;
+  font-size: 17px;
+  color: var(--texto-suave);
+}
+
+.painel .db-titulo {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.painel .db-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.painel .db-cabecalho span {
+  font-size: 14px;
+  color: var(--texto-mudo);
+}
+
+.painel .db-kpi {
+  min-height: 190px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.painel .a-nota {
+  box-shadow: inset 0 0 0 2px var(--rosa);
+}
+
+.painel .a-nota .db-valor {
+  color: var(--rosa);
+}
+
+.painel .a-nota .db-valor small {
+  font-size: 24px;
+  vertical-align: super;
+}
+
+.painel .a-dias .db-valor,
+.painel .a-dist .db-valor {
+  font-size: 38px;
+}
+
+.painel .dias-pais {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid var(--linha);
+  font-size: 15px;
+  color: var(--texto-suave);
+}
+
+.painel .dias-pais b {
+  font-size: 17px;
+}
+
+.painel .dias-pais b em {
+  font-style: normal;
+  font-size: 24px;
+  color: var(--rosa);
+}
+
+.painel .dist-area {
+  position: relative;
+  height: 190px;
+  margin-top: 14px;
+}
+
+.painel .a-grafico {
+  display: flex;
+  flex-direction: column;
+}
+
+.painel .grafico-area {
+  position: relative;
+  flex: 1;
+  min-height: 280px;
+}
+
+/* Listas (top 3 e rankings) */
+.painel .item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-top: 1px solid var(--linha);
+}
+
+.painel .item:first-of-type {
+  border-top: 0;
+}
+
+.painel .item h3 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.painel .item p {
+  margin: 2px 0 0;
+  font-size: 14px;
+  color: var(--texto-mudo);
+}
+
+.painel .posicao {
+  min-width: 30px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  background: rgba(216, 18, 91, 0.25);
+  color: var(--rosa-claro);
+}
+
+.painel .estrelas {
+  font-size: 19px;
+  letter-spacing: 3px;
+  white-space: nowrap;
+  color: var(--estrela-vazia);
+}
+
+.painel .estrelas .on {
+  color: var(--rosa);
+}
+
+.painel .ranking-colunas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.painel .ranking-col + .ranking-col {
+  margin-left: 36px;
+  padding-left: 36px;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.painel .ranking-sub {
+  margin: 0 0 4px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--rosa-claro);
+}
+
+.painel .ranking-col.menos .ranking-sub {
+  color: var(--texto-mudo);
+}
+
+.painel .ranking-col .item {
+  grid-template-columns: auto 1fr auto auto;
+  padding: 18px 0;
+}
+
+.painel .ranking-col.menos .item {
+  padding: 26px 0;
+}
+
+.painel .nota-num {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--rosa);
+}
+
+.painel .menos .nota-num {
+  color: #fff;
+}
+
+.painel .menos .posicao {
+  background: #4b4d5d;
+  color: #fff;
+}
+
+.painel .menos .estrelas .on {
+  color: #C9CAD3;
+}
+
+@media (max-width: 1100px) {
+  .painel {
+    padding: 24px 20px 32px;
+  }
+
+  .painel .painel-topo.com-filtro {
+    flex-wrap: wrap;
+  }
+
+  .painel .filtro {
+    flex-wrap: wrap;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .painel .filtro select {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .painel .painel-grade {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "destinos" "paises" "nota"
+      "dias" "dist" "grafico"
+      "top" "ranking";
+  }
+
+  .painel .db-kpi {
+    min-height: 0;
+  }
+
+  .painel .ranking-colunas {
+    grid-template-columns: 1fr;
+  }
+
+  .painel .ranking-col + .ranking-col {
+    margin: 16px 0 0;
+    padding: 16px 0 0;
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .painel .ranking-col.menos .item {
+    padding: 18px 0;
+  }
+}
